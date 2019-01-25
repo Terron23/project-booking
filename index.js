@@ -33,10 +33,10 @@ app.use(bodyParser.json());
 authRoutes(app);
 studioOwners(app);
 
-app.get('/', (req, res) =>{
-    res.sendFile(path.resolve(__dirname, 'index.html'));
+app.get('/test', (req, res) => {
+    res.send({"test": keys.googleClientID})
+    // res.sendFile(__dirname, "client/build/index.html")
   });
-
 
 
 
