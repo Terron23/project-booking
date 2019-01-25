@@ -34,7 +34,7 @@ authRoutes(app);
 studioOwners(app);
 
 app.get('/test', (req, res) => {
-    res.send({"test": keys.googleClientID})
+    res.send({"t": keys.googleClientID})
     // res.sendFile(__dirname, "client/build/index.html")
   });
 
