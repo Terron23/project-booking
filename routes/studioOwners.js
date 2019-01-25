@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const passport = require('passport')
 const keys = require('../config/keys');
-const cloudinary = require('cloudinary');
 const upload = multer({
     dest: "../temp"
     });
