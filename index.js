@@ -34,6 +34,7 @@ studioOwners(app);
 
 app.get('/test', (req, res) => {
     //res.send({"t": keys.googleClientID})
+    console.log(__dirname)
     res.sendFile("/Users/tmj/Documents/BeatBoxMVP/mvp/server/client/build/index.html")
   });
 
