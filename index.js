@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const studioOwners = require('./routes/studioOwners');
 const keys = require('./config/keys');
+const path = require("path");
 require('./models/User.js');
 require('./models/Studio.js');
 require('./services/passport.js');
@@ -22,7 +23,6 @@ app.use(
     })
 );
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -34,7 +34,7 @@ studioOwners(app);
 
 app.get('/test', (req, res) => {
     //res.send({"t": keys.googleClientID})
-    res.sendFile(__dirname, "/client/build/index.html")
+    res.sendFile("/Users/tmj/Documents/BeatBoxMVP/mvp/server/client/build/index.html")
   });
 
 
