@@ -4,15 +4,12 @@ const _ = require('lodash');
 //const Path = require('path-parser');
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 const { URL } = require('url');
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const passport = require('passport')
 const keys = require('../config/keys');
-const upload = multer({
-    dest: "../temp"
-    });
+
 
 require('../models/Studio.js');
 require('../models/User.js');
