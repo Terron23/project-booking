@@ -23,7 +23,6 @@ app.use(
 );
 
 
-app.use(express.static(__dirname + '/'));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -34,8 +33,8 @@ authRoutes(app);
 studioOwners(app);
 
 app.get('/test', (req, res) => {
-    res.send({"t": keys.googleClientID})
-    // res.sendFile(__dirname, "client/build/index.html")
+    //res.send({"t": keys.googleClientID})
+    res.sendFile(__dirname, "/client/build/index.html")
   });
 
 
