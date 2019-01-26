@@ -17,7 +17,7 @@ const Studios = ({studioName, price, guest, rules, id, image}) => {
       <div class="text">
 
         <h2 class="heading">{studioName}</h2>
-        <div class="price"><sup>$</sup><span class="number">{price}</span><sub>/per hour</sub></div>
+        <div class="price"><sup>$</sup><span class="number3">{price}</span><sub>/per hour</sub></div>
         <ul class="specs mb-5">
             <li><strong>Guest Allowed</strong> {guest}</li>
             <li><strong>Rules:</strong> {rules}</li>
