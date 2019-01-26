@@ -31,12 +31,9 @@ mongoose.connect(keys.mongoURI);
 module.exports = (app) => {
 
 
-app.post('/api/post-listing', upload.single("file"), async (req, res) => {
+app.post('/api/post-listing', async (req, res) => {
     
-    const tempPath = req.file;
-   console.log(tempPath);
-// cloudinary.v2.uploader.upload("https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", 
-// function(error, result) {console.log("Test", result, error)});
+
 
 const {name, phone, venue, address1, address2, postalCode, region, city, email, isPremium, price, rules, guest, studioName, studioImage} = req.body
 const existingUser = await Studio.findOne({_user: req.user.id, address1:address1, city, postalCode})
