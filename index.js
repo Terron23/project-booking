@@ -33,9 +33,9 @@ authRoutes(app);
 studioOwners(app);
 
 app.get('/test', (req, res) => {
-
-    console.log(__dirname)
-    res.sendFile("/Users/tmj/Documents/BeatBoxMVP/mvp/server/client/build/index.html")
+res.send({"test": "newapp"})
+    // console.log(__dirname)
+    // res.sendFile("/Users/tmj/Documents/BeatBoxMVP/mvp/server/client/build/index.html")
   });
 
 
