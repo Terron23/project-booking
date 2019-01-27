@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 authRoutes(app);
 studioOwners(app);
 
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
 res.send({"test": "newapp"})
     // console.log(__dirname)
     // res.sendFile("/Users/tmj/Documents/BeatBoxMVP/mvp/server/client/build/index.html")
