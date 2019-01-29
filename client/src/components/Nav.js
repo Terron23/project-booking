@@ -4,6 +4,16 @@ import {connect} from 'react-redux';
 
 
 class  NavBar extends Component  {  
+constructor(props){
+  super(props);
+  this.state ={
+newClass: "",
+  }
+}
+
+componentDidMount() {
+  window.addEventListener('scroll', this.handleScroll);
+}
 
  renderContent(){
    switch(this.props.auth){
@@ -15,11 +25,21 @@ class  NavBar extends Component  {
      return <li className="nav-item"><a className="nav-link" href="/api/logout">Logout</a></li>
    }
  }
+ 
+ handleScroll =(event) => {
+  let scrollTop = event.srcElement.body.scrollTop,
+      itemTranslate = Math.min(0, scrollTop/3 - 90);
+
+  this.setState({
+    newClass: "ftco-navbar-dark"
+  })
+
+}
 
   render(){
-
+let { newClass } = this.state
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <nav className={`navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ${newClass}`} id="ftco-navbar">
       <div className="container">
         <a className="navbar-brand" href="/">Studio Go</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">

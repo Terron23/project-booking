@@ -98,8 +98,8 @@ studioImage = this.state.url
       }
       const { auth } = this.props
     return (
-    <div className="container-fluid site-section bg-dark">
-    <div className="container" style={{"marginTop": "100px"}}>
+    <div className="container-fluid site-section">
+    <div className="container" style={{"marginTop": "50px"}}>
     	 <form id="myForm" className="form-horizontal col-md-6" onSubmit={this.handleSubmit}>
             <fieldset>
 
