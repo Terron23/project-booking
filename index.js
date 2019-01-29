@@ -22,7 +22,7 @@ app.use(
         keys: [keys.cookieKey]
     })
 );
-
+app.use(express.static(path.join(__dirname+'/client/build')))
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 authRoutes(app);
 studioOwners(app);
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
   });
 
