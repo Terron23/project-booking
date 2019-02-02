@@ -5,8 +5,9 @@ import Hero from './hero'
 import ListStudio from './ListStudio'
 import SignUp from './SignUp'
 import StudioSearch from './Studios/StudioSearch'
+import SingleStudio from './Studios/SingleStudio'
 import Profile from './Profile/Profile'
-import Tabs from './Profile/Tabs'
+import Payment from './Payment'
 import {connect} from 'react-redux'
 import * as actions from '../actions'
 
@@ -34,8 +35,9 @@ componentDidMount(){
          <Route path="/sign-up" component={SignUp} />
          <Route path="/post-studio" component={ListStudio} />
          <Route path="/search-studio" component={StudioSearch} />
-         <Route path="/find-studio/:id" component={Profile} />
-         <Route path="/userprofile/" component={Profile} />
+         <Route path="/find-studio/:id" component={SingleStudio} />
+         <Route path="/userprofile" component={Profile} />
+         <Route path="/payment" component={Payment} />
          </div>
        </BrowserRouter>
       </div>

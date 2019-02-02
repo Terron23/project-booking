@@ -8,11 +8,19 @@ constructor(props){
   super(props);
   this.state ={
 newClass: "",
+isActive: "",
   }
 }
 
 componentDidMount() {
   window.addEventListener('scroll', this.handleScroll);
+}
+
+handleClick = (id) => {
+
+
+  this.setState()
+
 }
 
  renderContent(){
@@ -22,7 +30,8 @@ componentDidMount() {
      case false:
      return   <li className="nav-item"><a className="nav-link" href="/sign-up">Sign Up/Login</a></li>
      default:
-     return <li className="nav-item"><a className="nav-link" href="/api/logout">Logout</a></li>
+     return [<li className="nav-item"><a href="/userprofile" className="nav-link">{this.props.auth.name}'s' Profile</a></li>,
+     <li className="nav-item"><a className="nav-link" href="/api/logout">Logout</a></li>]
    }
  }
  
@@ -48,8 +57,9 @@ let { newClass } = this.state
   
         <div className="collapse navbar-collapse" id="ftco-nav">
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item active"><a href="/search-studio" className="nav-link">Book A Session</a></li>
+            <li className="nav-item"><a href="/search-studio" className="nav-link">Book A Session</a></li>
             <li className="nav-item"><a href="/post-studio" className="nav-link">Add Your Studio</a></li>
+          
             {this.renderContent()}
           </ul>
         </div>

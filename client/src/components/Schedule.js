@@ -17,7 +17,7 @@ export default class Schedule extends Component {
               <div className="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin">Location</label>
                   <div className="field-icon-wrap">
-                    <div className="icon"><span className="icon"></span></div>
+                    <div className="icon"><span className="icon-location-arrow"></span></div>
                     <input type="text" id="location" className="form-control" />
                   </div>
                 </div>

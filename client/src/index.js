@@ -7,6 +7,7 @@ import './index.css';
 import App from './components/App';
 import reducers from './reducers'
 import reduxThunk from 'redux-thunk';
+require('dotenv').config()
 
 
 

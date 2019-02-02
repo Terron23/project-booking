@@ -36,7 +36,7 @@ app.post('/api/post-listing', async (req, res) => {
 
 
 const {name, phone, venue, address1, address2, postalCode, region, city, email, isPremium, price, rules, guest, studioName, studioImage} = req.body
-const existingUser = await Studio.findOne({_user: req.user.id, address1:address1, city, postalCode})
+const existingUser = await Studio.findOne({_user: req.user.id, address1, city, postalCode})
 
 console.log(req.body)
 if(existingUser){

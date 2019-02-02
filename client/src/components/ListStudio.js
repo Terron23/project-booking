@@ -11,6 +11,7 @@ super(props);
 this.state ={
     files: null,
     url: null,
+    alert: "d-none"
 }
 }
 
@@ -26,12 +27,15 @@ let file =
   this.setState({files : event.target.files[0]})
 }
 
+handleClick =()=>{
+    this.setState({alert: "d-none"})
+}
 
-handleSubmit = (event) =>{
+
+
+handleSubmit = async (event) => {
 event.preventDefault();
 
-console.log(this.state.files)
-   
 //console.log(files[0])
 let name = event.target.name.value
 let address1 = event.target.address1.value
@@ -48,59 +52,45 @@ let rules = event.target.rules.value
 let guest = event.target.guest.value
 let files = this.state.files
 let studioImage; 
+
+console.log(files)
 const formData = new FormData();
 formData.append('file', files)
 formData.append('upload_preset', 'nyv0ihyq')
 
-console.log("Cloudinary", formData);
-axios.post('https://api.cloudinary.com/v1_1/etlt/image/upload', formData)
+this.setState({alert: "alert alert-success"})
 
-.then(function (response) {
-    studioImage = response.data.url
-    axios.post('/api/post-listing', {
-        studioName,
-        price,
-        rules,
-        guest,
-        name,
-        email,
-        address1,
-        address2,
-        postalCode,
-        city,
-        region,
-        phone,
-        venue,
-        studioImage
-        
-        })
-        .then(function (response) {
-            console.log(response);
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        
- 
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+const cloudResponse = await axios.post('https://api.cloudinary.com/v1_1/etlt/image/upload', formData)
 
-studioImage = this.state.url
+studioImage = await cloudResponse.data.url
+
+const studioUploadResponse = await axios.post('/api/post-listing', {studioName, price, rules, name, email,address1, address2, postalCode, city, region, phone, venue, studioImage })
+
+
+
 
 }
+
+
 
   render() {
       if (!this.props.auth) {
           return ''
       }
       const { auth } = this.props
+      const { alert } = this.state
     return (
     <div className="container-fluid site-section">
-    <div className="container" style={{"marginTop": "50px"}}>
+    <div className={`text-center fixed-top ${alert}`}>
+    <span onClick={this.handleClick}>X</span>
+    <p>New Studio has been added</p>
+    </div>
+  
+    <div className="container">
+    <h3>Add Your Studio</h3>
+    <hr />
     	 <form id="myForm" className="form-horizontal col-md-6" onSubmit={this.handleSubmit}>
+        
             <fieldset>
 
                 <div className="form-group">
@@ -242,13 +232,12 @@ studioImage = this.state.url
        
         <div className="form-group">
 
-<input className="form-control " type="file" 
- multiple onChange={this.handleFiles} />
+<input className="form-control" type="file"  onChange={this.handleFiles} multiple />
   </div>
 </div>
+<hr />
+<button className="btn btn-primary" type="submit">Submit</button>
 
-                 
-                 <button className="btn btn-primary" type="submit">Submit</button>
                      
                  
             
