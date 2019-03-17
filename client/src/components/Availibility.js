@@ -40,7 +40,7 @@ e.preventDefault()
     </div>
 
     <div className="form-group mb-2 mx-sm-3">
-       <label>From:</label> <input name={`starttime`}  type="time" defaultValue="" className="timepicker dates form-control" />
+       <label>From:</label> <input name={`starttime`}  type="time" defaultValue="" className="timepicker dates no form-control" />
         </div>
   
         <div className="form-group mb-2 mx-sm-3">
