@@ -3,11 +3,13 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import NavBar from './Nav'
 import Hero from './hero'
 import ListStudio from './ListStudio'
+import Availibility from './Availibility'
 import SignUp from './SignUp'
 import StudioSearch from './Studios/StudioSearch'
 import SingleStudio from './Studios/SingleStudio'
 import Profile from './Profile/Profile'
-import Payment from './Payment'
+import Payment from './Checkout/Payment'
+import NotLoggedIn from './ModalLogin'
 import {connect} from 'react-redux'
 import * as actions from '../actions'
 
@@ -38,8 +40,11 @@ componentDidMount(){
          <Route path="/find-studio/:id" component={SingleStudio} />
          <Route path="/userprofile" component={Profile} />
          <Route path="/payment" component={Payment} />
+         <Route path="/availibility/:studioName" component={Availibility} />
          </div>
        </BrowserRouter>
+
+       <NotLoggedIn />
       </div>
     );
   }

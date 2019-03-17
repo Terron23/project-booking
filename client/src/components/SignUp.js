@@ -31,7 +31,8 @@ const RightSide = ({oauth}) =>{
   return(
   <div className="col-md-6">
 
-    <a className="btn btn-block btn-danger" href="/auth/google">Login With Google</a>
+    <a className="btn btn-block btn-primary" href="/auth/google">Login With Google</a>
+    <a className="btn btn-block btn-primary" href="/auth/facebook">Login With Facebook</a>
   
 </div>
 )
@@ -43,11 +44,13 @@ class SignUp extends Component  {
 
   render(){
     return (
-    <div style={{"marginTop": "50px"}}>
-    <h2 className="text-center">Sign In</h2>	
-	   <LeftSide />
+    <div style={{"marginTop": "50px"}} className="container">
+    <h2 className="">Sign In</h2>	
 
      <RightSide  />
+     <hr />
+	   <LeftSide />
+
     </div>
      )
     }

@@ -13,9 +13,11 @@ const keys = require('../config/keys');
 
 require('../models/Studio.js');
 require('../models/User.js');
+require('../models/Availibility.js');
 require('../services/passport.js');
 
 const Studio = mongoose.model('studio');
+const Availibility = mongoose.model('availibility');
 
 
 
@@ -31,14 +33,42 @@ mongoose.connect(keys.mongoURI);
 module.exports = (app) => {
 
 
-app.post('/api/post-listing', async (req, res) => {
+    app.post('/api/post-listing-time', async (req, res) => {
+
+
+        const {starttime, endtime, day, studioname} = req.body
+        let studioName = studioname;
+        //delete req.body.studioname;
+        console.log(req.body)
+        console.log(studioname)
+       const studioUpdate = await Studio.update(
+            { studioName:studioName},
+            {$push: { availibility: req.body}
+            })
+        
+            console.log(studioUpdate)
+     
+        
+        // else{
+        //    let availibility = new Availibility({ 
+        //     _user: req.user.id,
+        //     day,
+        //     starttime,
+        //     endtime
+          
+        //     }).save();
+        // }
+         
+        });
+        
     
 
-
-const {name, phone, venue, address1, address2, postalCode, region, city, email, isPremium, price, rules, guest, studioName, studioImage} = req.body
+app.post('/api/post-listing', async (req, res) => {
+    
+const {name, phone, venue, address1, address2, postalCode, region, city, email, isPremium, price, rules, guest, studioName, studioImage, studioType, hoursOfOperation} = req.body
 const existingUser = await Studio.findOne({_user: req.user.id, address1, city, postalCode})
-
 console.log(req.body)
+
 if(existingUser){
    res.send("Studio Already Exists")
    console.log("Studio Already Existis")
@@ -61,22 +91,34 @@ else{
     guest,
     price,
     rules,
+    hoursOfOperation,
+    studioType,
     studioImage,
     }).save();
 }
  
-    //res.send(studio);
 });
 
 
 app.get('/api/studio-listing', async (req, res) => {
 
+    // const studio = await Studio.find({}, function (err, studio) {
+    //     res.send(studio);
+    // });
+
     const studio = await Studio.find({}, function (err, studio) {
         res.send(studio);
     });
-    //.select({isListed: true});
-  
-      
+    //.select({isListed: true});   
+});
+
+
+app.get('/api/availibility', async (req, res) => {
+
+    const availibility = await Availibility.find({}, function (err, availibility) {
+        res.send(availibility);
+    });
+   
 });
 
 }

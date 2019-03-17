@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/auth/google": {
+    "/auth/*": {
       "target": "http://localhost:5000"
     },
     "/api/*": {
@@ -16,11 +16,16 @@
     "dotenv": "^6.2.0",
     "material-css": "^0.7.0",
     "materialize-css": "^1.0.0-rc.1",
+    "merge-descriptors": "^1.0.1",
+    "moment": "^2.24.0",
     "react": "^16.2.0",
+    "react-available-times": "^1.2.2",
+    "react-datetime": "^2.16.3",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "react-stripe-elements": "^2.0.3",
     "redux": "^3.7.2",
     "redux-thunk": "^2.3.0",
     "yarn": "^1.13.0"

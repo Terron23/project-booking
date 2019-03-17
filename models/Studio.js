@@ -20,7 +20,10 @@ studioSchema = new Schema({
     rules: String,
     studioName: String,
     price: Number,
-    studioImage: String
+    studioImage: String,
+    hoursOfOperation: String,
+    studioType: String,
+    availibility: Array,
     
     
 });

@@ -28,9 +28,11 @@ handleClick = (id) => {
      case null:
      return 
      case false:
-     return   <li className="nav-item"><a className="nav-link" href="/sign-up">Sign Up/Login</a></li>
+     return   [<li className="nav-item"><a className="nav-link" href="/sign-up">Add Your Studio</a></li>,
+     <li className="nav-item"><a className="nav-link" href="/sign-up">Sign Up/Login</a></li>]
      default:
-     return [<li className="nav-item"><a href="/userprofile" className="nav-link">{this.props.auth.name}'s' Profile</a></li>,
+     return [<li className="nav-item"><a href="/post-studio" className="nav-link">Add Your Studio</a></li>,
+     <li className="nav-item"><a href="/userprofile" className="nav-link">{this.props.auth.name}'s' Profile</a></li>,
      <li className="nav-item"><a className="nav-link" href="/api/logout">Logout</a></li>]
    }
  }
@@ -58,7 +60,7 @@ let { newClass } = this.state
         <div className="collapse navbar-collapse" id="ftco-nav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item"><a href="/search-studio" className="nav-link">Book A Session</a></li>
-            <li className="nav-item"><a href="/post-studio" className="nav-link">Add Your Studio</a></li>
+            
           
             {this.renderContent()}
           </ul>
