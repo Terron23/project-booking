@@ -12,12 +12,14 @@ const keys = require('../config/keys');
 
 
 require('../models/Studio.js');
+require('../models/StudioBooked.js');
 require('../models/User.js');
 require('../models/Availibility.js');
 require('../services/passport.js');
 
 const Studio = mongoose.model('studio');
 const Availibility = mongoose.model('availibility');
+const Booked = mongoose.model("studioBooked");
 
 
 
@@ -119,6 +121,14 @@ app.get('/api/availibility', async (req, res) => {
         res.send(availibility);
     });
    
+});
+
+app.get('/api/studioBooked', async (req, res) =>{
+
+    const booked = await Booked.find({}, function (err, booked) {
+        res.send(booked);
+    });
+
 });
 
 }

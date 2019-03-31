@@ -5,6 +5,7 @@ const {Schema} = mongoose;
 
 userSchema = new Schema({
     googleID: String,
+    FACEBOOK_APP_ID: String,
     email: String,
     name: String,
     

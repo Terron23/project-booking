@@ -39,7 +39,7 @@ componentDidMount(){
          <Route path="/search-studio" component={StudioSearch} />
          <Route path="/find-studio/:id" component={SingleStudio} />
          <Route path="/userprofile" component={Profile} />
-         <Route path="/payment" component={Payment} />
+         <Route path="/payment/:studioid" component={Payment} />
          <Route path="/availibility/:studioName" component={Availibility} />
          </div>
        </BrowserRouter>

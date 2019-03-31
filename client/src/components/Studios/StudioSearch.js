@@ -161,10 +161,19 @@ return(<div className="container">
       <form onSubmit={handleAvailibility}>
         <div className="row">
         <div className="col-md-6 mb-3 mb-lg-0 col-lg-3">
-            <label for="checkin">Location</label>
+            <label for="checkin">City or Zip</label>
             <div className="field-icon-wrap">
               <div className="icon"><span class="icon-location-arrow"></span></div>
-         <input type="text" id="location" name="location" className="form-control" placeholder="City, State or Zip"/> 
+         <input type="text" id="location" name="location" className="form-control" placeholder="City"/> 
+           
+            </div>
+          </div>
+
+           <div className="col-md-6 mb-3 mb-lg-0 col-lg-3">
+            <label for="checkin">State</label>
+            <div className="field-icon-wrap">
+              <div className="icon"><span class="icon-location-arrow"></span></div>
+              <select id="state" name="state" className="form-control"><option value="">---</option><option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="District of Columbia">District of Columbia</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Guam">Guam</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option><option value="Illinois">Illinois</option><option value="Indiana">Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option><option value="Maine">Maine</option><option value="Maryland">Maryland</option><option value="Massachusetts">Massachusetts</option><option value="Michigan">Michigan</option><option value="Minnesota">Minnesota</option><option value="Mississippi">Mississippi</option><option value="Missouri">Missouri</option><option value="Montana">Montana</option><option value="Nebraska">Nebraska</option><option value="Nevada">Nevada</option><option value="New Hampshire">New Hampshire</option><option value="New Jersey">New Jersey</option><option value="New Mexico">New Mexico</option><option value="New York">New York</option><option value="North Carolina">North Carolina</option><option value="North Dakota">North Dakota</option><option value="Northern Marianas Islands">Northern Marianas Islands</option><option value="Ohio">Ohio</option><option value="Oklahoma">Oklahoma</option><option value="Oregon">Oregon</option><option value="Pennsylvania">Pennsylvania</option><option value="Puerto Rico">Puerto Rico</option><option value="Rhode Island">Rhode Island</option><option value="South Carolina">South Carolina</option><option value="South Dakota">South Dakota</option><option value="Tennessee">Tennessee</option><option value="Texas">Texas</option><option value="Utah">Utah</option><option value="Vermont">Vermont</option><option value="Virginia">Virginia</option><option value="Virgin Islands">Virgin Islands</option><option value="Washington">Washington</option><option value="West Virginia">West Virginia</option><option value="Wisconsin">Wisconsin</option><option value="Wyoming">Wyoming</option></select>
            
             </div>
           </div>
@@ -216,7 +225,7 @@ return(<div className="container">
                   </select>
                 </div>
               </div>
-              <div className="col-md-6 mb-3 mb-md-0">
+              {/* <div className="col-md-6 mb-3 mb-md-0">
                 <label for="checkin">Distance</label>
                 <div className="field-icon-wrap">
                   <div className="icon"><span className="ion-ios-arrow-down"></span></div>
@@ -228,7 +237,7 @@ return(<div className="container">
                     <option value="">25 miles</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-md-6 col-lg-3 align-self-end">
@@ -258,7 +267,8 @@ this.state = {
   day: "",
   availibility:[],
   guest: "",
-  location:""
+  location:"",
+  state: "",
 }
 
   }
@@ -281,6 +291,8 @@ componentDidMount(){
 // }
 
 
+
+
 handleTime =(e)=>{
 
   this.setState({time: e.target.value})
@@ -295,20 +307,25 @@ handleTime =(e)=>{
 handleAvailibility = (e) =>{
   e.preventDefault();
   // let {zip, miles} = this.state
-  axios.post(`http://www.zipcodeapi.com/rest/o9assr2FD5UbIIh2dXE7WWQhcZPTPMr6fiHTiQkhEYGIWCaeRTQtmXQopteZ1NiH/multi-distance.json/11221/11216, 11215, 11899, 11443/mile`).then(response=>console.log(response))
+  // axios.post(`https://www.zipcodeapi.com/rest/GayLTCKMsaaeXHv6anHFEzXIfSaEvdWY82fv7FqHZ1rhkB8p0yDFGkvrDe4BY1OS/multi-distance.json/11221/11221,11223,11215,11226/mile`)
+  // .then((response)=>{
+  //   console.log(response)
+  // });
   let time = e.target.calendar.value.split("T").pop()
   let day = e.target.calendar.value.split("T").shift()
   let m = moment(day, "YYYY-MM-DD");
   let dow = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   let guest = e.target.guest.value
   let location = e.target.location.value;
+  let state = e.target.state.value;
   console.log(time);
   //console.log(dow[m.day()]);
 
   this.setState({
     filterStudioType: e.target.studioType.value, 
     time, day:dow[m.day()],
-  guest, location
+  guest, location,
+  state,
   })
 
 
@@ -355,11 +372,17 @@ handleAvailibility = (e) =>{
         if(this.state.location === ''){
           return location.city.length  > 0;
         }
-        return location.city === this.state.location
+        return location.city.toLowerCase()  === this.state.location.toLowerCase() 
+      })
+      .filter(state=> {
+        if(this.state.state === ''){
+          return state.region.length  > 0;
+        }
+        return state.region.toLowerCase()  === this.state.state.toLowerCase() 
       })
       .map(studio=>{
 
-        if(!this.state.day) {
+        if(!this.state.day || this.state.day == undefined) {
         return(
           <Studios key={studio._id}
           studioName={studio.studioName} 
@@ -374,13 +397,21 @@ handleAvailibility = (e) =>{
           
            />)
         }
-        
-      
-            return   studio.availibility = studio.availibility.filter((thing, index, self) =>
-            index === self.findIndex((t) => (
-              t.availibility === thing.availibility && t.studioName === thing.studioName
-            ))
-          ).map(datetime=>{
+   if(studio.availibility === undefined){
+     return '';
+   }
+  
+          
+   
+   return    studio.availibility.filter((thing, index, self) =>{
+            
+          return  index === self.findIndex((t) => (
+          
+              t.availibility === thing.availibility && t.studioName === thing.studioName )
+              )
+            
+          
+          }).map(datetime=>{
                if(datetime.day === this.state.day)
               return(
             <Studios key={studio._id}
@@ -406,7 +437,7 @@ handleAvailibility = (e) =>{
         
         
         
-
+       
        
         </div>
         </div>

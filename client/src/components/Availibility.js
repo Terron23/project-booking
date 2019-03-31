@@ -102,6 +102,9 @@ throw err;3
     <hr />
  
   {this.state.dates.map(dates=>{
+      if (!dates){
+          return ''
+      }
       return dates
   })}
 

@@ -23,7 +23,7 @@ const Studios = ({studioName, price, guest, rules, id, image}) => {
             <li><strong>Rules:</strong> {rules}</li>
         </ul>
 
-        <p><a href="/payment" class="btn btn-primary py-3 px-5">Book</a></p>
+        <p><Link to={`/payment/${id}`} className="btn btn-primary py-3 px-5">Book</Link></p>
 
       </div>
     </div>
