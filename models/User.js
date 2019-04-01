@@ -5,9 +5,10 @@ const {Schema} = mongoose;
 
 userSchema = new Schema({
     googleID: String,
-    FACEBOOK_APP_ID: String,
+   facebookID: String,
     email: String,
     name: String,
+    social: Array,
     
 });
 //Mongo two arguments mean load something in

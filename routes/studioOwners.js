@@ -72,8 +72,36 @@ const existingUser = await Studio.findOne({_user: req.user.id, address1, city, p
 console.log(req.body)
 
 if(existingUser){
-   res.send("Studio Already Exists")
-   console.log("Studio Already Existis")
+    Studio.update(
+        {  _user: req.user.id },
+        {
+            name,
+            phone,
+            venue,
+            address1,
+            address2,
+            postalCode,
+            region,
+            city,
+            email,
+            isListed: true,
+            studioName,
+            guest,
+            price,
+            rules,
+            hoursOfOperation,
+            studioType,
+            studioImage,
+        },
+        { upsert: true },
+        (err,data)=>{
+            if (err){
+                console.log(err);
+            }else{
+                console.log("update succeded");
+            }
+        }
+     )
 }
 
 else{

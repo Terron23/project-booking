@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+  <NavBar />
 
 
 class  NavBar extends Component  {  
@@ -50,7 +50,7 @@ handleClick = (id) => {
   render(){
 let { newClass } = this.state
     return (
-      <nav className={`navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ${newClass}`} id="ftco-navbar">
+      <nav className={`navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light`} id="ftco-navbar">
       <div className="container">
         <a className="navbar-brand" href="/">Studio Go</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">

@@ -32,9 +32,7 @@ handleFiles = (event) => {
   this.setState({files : event.target.files[0]})
 }
 
-handleClick =()=>{
-    this.setState({alert: "d-none"})
-}
+
 
 handleDates =(e)=>{
 e.preventDefault()
@@ -130,7 +128,6 @@ const studioUploadResponse = await axios.post('/api/post-listing', {studioName, 
 
 // const studioUploadResponse = await axios.post('/api/post-listing', formData)
 
-await this.setState({alert: "alert alert-success"});
 
        
 
@@ -142,7 +139,15 @@ throw err;
 
 }
 
-
+handleClick =(e)=>{
+    e.preventDefault()
+    if(this.state.alert === 'd-none'){
+    this.setState({alert: "alert alert-success"});
+    }
+    else{
+        this.setState({alert: "d-none"});
+    }
+}
 
   render() {
       if (!this.props.auth) {
@@ -336,17 +341,18 @@ throw err;
 
    <div className="form-group row">
    
-<button className="btn btn-primary" type="submit">Submit</button>
+<button className="btn btn-primary" onClick={this.handleClick} type="submit">Submit</button>
 </div>
-<div className="form-group row">
-<Link to={`/availibility/${studioName}`} className={`btn btn-primary ${alert}`} >Add Availibility</Link>
-</div>
+
 
                      
                  
             
             </fieldset>
         </form>
+        <div className="form-group row">
+<Link to={`/availibility/${studioName}`} className={`btn btn-primary ${alert}`} >Add Availibility</Link>
+</div>
       </div>
       </div>
     );

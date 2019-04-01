@@ -3,12 +3,12 @@ const passport = require('passport');
 var stripe = require("stripe")("sk_test_V6wlaNvsxc7i7lpa0BfseByb");
 const keys = require('../config/keys');
 
-
+require('../models/User.js');
 require('../models/StudioBooked.js');
 
 
 const StudioBooked = mongoose.model('studioBooked');
-
+const Users = mongoose.model('users');
 // Token is created using Checkout or Elements!
 // Get the payment token ID submitted by the form:
 
@@ -46,8 +46,29 @@ res.redirect('/');
 
 app.get('/api/current_user', (req, res)=>{
 res.send(req.user);
-
 });
+
+app.post('/api/update_user', (req, res)=>{
+
+  let {username: name, email, instagram, twitter, facebook} = req.body
+  console.log(req.body);
+  Users.update(
+    {  _id: req.user.id },
+    {
+     email,
+     name: "Terron",
+     social: [instagram, twitter, facebook]
+    },
+    { upsert: true },
+    (err,data)=>{
+        if (err){
+            console.log(err);
+        }else{
+            console.log("update succeded");
+        }
+    }
+ )
+})
 
 
 app.post("/api/payment" , async (req, res) => {

@@ -60,7 +60,7 @@ passport.use(new FacebookStrategy({
         console.log(profile)
     done(null, existingUser)
     }
-        const user = await new User({FACEBOOK_APP_ID: profile.id, name: profile.displayName}).save()
+        const user = await new User({facebookID: profile.id, name: profile.displayName}).save()
          done(null, user);
     
     }));

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route} from 'react-router-dom'
 import NavBar from './Nav'
-import Hero from './hero'
+import Home from './Home'
 import ListStudio from './ListStudio'
 import Availibility from './Availibility'
 import SignUp from './SignUp'
@@ -28,12 +28,12 @@ componentDidMount(){
   render() {
     return (
       <div className="container-fluid">
-     <NavBar />
+   
 
        <BrowserRouter>
        <div>
-
-         <Route exact  path="/" component={Hero}/> 
+       <NavBar />
+         <Route exact  path="/" component={Home}/> 
          <Route path="/sign-up" component={SignUp} />
          <Route path="/post-studio" component={ListStudio} />
          <Route path="/search-studio" component={StudioSearch} />

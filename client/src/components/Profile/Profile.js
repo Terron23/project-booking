@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Tabs from './Tabs'
 import { fetchStudio, fetchUser, fetchBookings } from '../../actions';
 import axios from 'axios'
+import StudioProfile from './StudioProfile'
 
 
 const ProfileSideBar = ({name, email, studioname, view}) =>{
@@ -44,6 +45,10 @@ const ProfileSideBar = ({name, email, studioname, view}) =>{
                     <label className="control-label">Soundcloud</label>
       <input className="form-control"  placeholder="soundcloud" />
       </div>
+
+      <div>
+        
+        </div>
          </form>
          </div>
         </div>
@@ -82,33 +87,48 @@ handleStudioListed =()=>{
 
       return (
       <div>
-      <div className="col-md-12">
-    <div className="form-group">
-                    <label className="control-label">Studio Name</label>
-                  
-          <input className="form-control" defaultValue={studio.studioName} />
-          </div>
-          <div className="form-group">
-                    <label className="control-label">Studio Type</label>
-      <input className="form-control"  defaultValue={studio.studioType} />
-      </div>
-      <div className="form-group">
-                    <label className="control-label">City</label>
-      <input className="form-control"  defaultValue={studio.city} />
-      </div>
-      <div className="form-group">
-                    <label className="control-label">Region</label>
-      <input className="form-control"  defaultValue={studio.region} />
-      </div>
-      <div className="form-group">
-                    <label className="control-label">Price</label>
-      <input className="form-control"  defaultValue={studio.price} />
-      </div>
-    
-      </div>
-      <hr />
-      </div>)             
+        <StudioProfile name={studio.name} phone={studio.phone}
+        venue={studio.venue} address1={studio.address1} address2={studio.address2}
+        postalcode={studio.postalCode} region = {studio.region}
+        city={studio.city}
+        email={studio.email}
+        isListed = {studio.isListed}
+        studioName = {studio.studioName}
+        guest={studio.guest}
+        price={studio.price}
+        rules={studio.rules}
+        studioType={studio.studioType}
+        />
+        <hr />
+      </div>)           
   })
+}
+
+handleSubmit = async (e, form) =>{
+  e.preventDefault()
+  let username = e.target.username.value;
+  let email = e.target.email.value;
+  let twitter = e.target.twitter.value;
+  let instagram = e.target.instagram.value;
+  let facebook = e.target.facebook.value;
+
+  console.log(form)
+  alert("this works")
+
+  try{
+  if(form === 'users'){
+  const res = axios.post('/api/update_user', {username, email, twitter, instagram, facebook,})
+  }
+
+  if(form === 'studios'){
+    const res = axios.post('/api/update_user', {username, email, twitter, instagram, facebook,})
+    }
+}
+
+  catch(err){
+    throw err;
+    }
+
 }
 
 
@@ -118,17 +138,35 @@ handleUser=()=>{
 return (
   <div>
   <div className="col-md-12">
-            
+            <form onSubmit={(e)=>this.handleSubmit(e, 'users')}>
       <div className="form-group">
                 <label className="control-label">Email</label>
-  <input className="form-control"  defaultValue={auth.email} />
+  <input className="form-control"  name="email" defaultValue={auth.email} />
   </div>
 
      <div className="form-group">
-                <label className="control-label">User Name</label>
-  <input className="form-control"  defaultValue={auth.name} />
+                <label className="control-label">Profile Name</label>
+  <input className="form-control"  name="username" defaultValue={auth.name} />
   </div>
 
+
+     <div className="form-group">
+                <label className="control-label">Instargam</label>
+  <input className="form-control"  name="instagram" defaultValue="" />
+  </div>
+
+   <div className="form-group">
+                <label className="control-label">FaceBook</label>
+  <input className="form-control"  name="facebook" defaultValue="" />
+  </div>
+
+  <div className="form-group">
+                <label className="control-label">Twitter</label>
+  <input className="form-control"  name="twitter" defaultValue="" />
+  </div>
+
+  <div><button className="btn btn-primary" type="submit">Submit</button></div>
+</form>
   </div>
   <hr />
   </div>
@@ -163,7 +201,7 @@ console.log(auth)
   <div className="container" style={{"marginTop": "50px"}}>
   <div className="row">
 <div className="col-md-3">
-<ProfileSideBar name={auth.name} email={auth.email} view={view} handleView={this.handleView} />
+<ProfileSideBar name={auth.name} email={auth.email} view={view} handleView={this.handleView} social={auth.social} />
 
 <hr />
 

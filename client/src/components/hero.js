@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Schedule from './Schedule'
 import BG2 from '../images/bg_2.jpg'
 import BG1 from '../images/bg_1.jpg'
 import BG3 from '../images/bg_3.jpg'
+
 
 
 export default class Hero extends Component {
@@ -49,7 +49,8 @@ export default class Hero extends Component {
           </div>
         </div>
       </div>
-      <Schedule />
+      {/* <Schedule block="block-32"/>
+      <FeaturedStudios /> */}
     </div>
 
     );
