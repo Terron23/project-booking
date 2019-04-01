@@ -198,7 +198,7 @@ console.log()
     console.log("Booked", this.props)
 console.log(auth)
     return (
-  <div className="container" style={{"marginTop": "50px"}}>
+  <div className="container" style={{"marginTop": "150px"}}>
   <div className="row">
 <div className="col-md-3">
 <ProfileSideBar name={auth.name} email={auth.email} view={view} handleView={this.handleView} social={auth.social} />
