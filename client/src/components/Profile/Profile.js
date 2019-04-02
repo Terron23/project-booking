@@ -6,7 +6,7 @@ import axios from 'axios'
 import StudioProfile from './StudioProfile'
 
 
-const ProfileSideBar = ({name, email, studioname, view}) =>{
+const ProfileSideBar = ({name, email, studioname, view, social}) =>{
   return (<div class="">
   <div className="row user-profile">
   <div class="col-md-12">
@@ -20,8 +20,25 @@ const ProfileSideBar = ({name, email, studioname, view}) =>{
       <div class="profile-usertitle">
         <div class="profile-userInfo">
         <h5>{name}</h5>
-        <h5> {studioname}</h5>
-       <a href={`mailTo:${email}`} ><span className="icon-mail_outline"> {email}</span></a><br />
+      <p>
+       <a href={`mailTo:${email}`} ><span className="icon-mail_outline"> {email}</span></a></p>
+
+        <p>
+      <span> {social.map(social=>{
+        if(social.toLowerCase().match("facebook")){
+          return <p><a href={social} target="_blank"><span className="ion ion-logo-facebook"> FaceBook</span></a></p>
+        }
+
+        if(social.toLowerCase().match("instagram")){
+          return <p><span className="ion ion-logo-instagram"> <a href={social} target="_blank">Instagram</a></span></p>
+        }
+
+
+        if(social.toLowerCase().match("twitter")){
+          return <p><a href={social} target="_blank">Twitter</a></p>
+        }
+         return (<p><a href={social} target="_blank">{social}</a></p>)
+       })}</span></p>
       
        <div className={`social ${view}`}>
        <form>
@@ -98,6 +115,7 @@ handleStudioListed =()=>{
         price={studio.price}
         rules={studio.rules}
         studioType={studio.studioType}
+        studioid = {studio._id}
         />
         <hr />
       </div>)           
@@ -106,17 +124,24 @@ handleStudioListed =()=>{
 
 handleSubmit = async (e, form) =>{
   e.preventDefault()
-  let username = e.target.username.value;
-  let email = e.target.email.value;
-  let twitter = e.target.twitter.value;
-  let instagram = e.target.instagram.value;
-  let facebook = e.target.facebook.value;
+  let username;
+  let email;
+  let twitter; 
+  let instagram; 
+  let facebook; 
+  let studioid; 
 
   console.log(form)
   alert("this works")
 
   try{
   if(form === 'users'){
+  username = e.target.username.value;
+  email = e.target.email.value;
+  twitter = e.target.twitter.value;
+  instagram = e.target.instagram.value;
+  facebook = e.target.facebook.value;
+  
   const res = axios.post('/api/update_user', {username, email, twitter, instagram, facebook,})
   }
 

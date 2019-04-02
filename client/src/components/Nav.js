@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-  <NavBar />
+import {Link } from 'react-router-dom'
 
 
 class  NavBar extends Component  {  

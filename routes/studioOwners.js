@@ -73,7 +73,8 @@ console.log(req.body)
 
 if(existingUser){
     Studio.update(
-        {  _user: req.user.id },
+        {  _user: req.user.id,
+         _id: studioid},
         {
             name,
             phone,

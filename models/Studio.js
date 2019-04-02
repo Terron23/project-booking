@@ -24,6 +24,7 @@ studioSchema = new Schema({
     hoursOfOperation: String,
     studioType: String,
     availibility: Array,
+    rating: Array,
     
     
 });

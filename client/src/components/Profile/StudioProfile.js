@@ -15,16 +15,18 @@ const StudioProfile = ({handleSubmit,  name,
     price,
     rules,
     hoursOfOperation,
-    studioType,})=>{
+    studioType, studioid})=>{
     return( 
     <div>
         <div>
     <form onSubmit={(e)=>handleSubmit(e, 'studio')}>
 
+<input type="hidden" value={studioid} name="studioid"/>
     <div className="form-group">
         <label className="control-label">Studio Name</label>
         <div className="form-group">
-            <input id="studio-name" name="studioName" type="text" placeholder="Enter the Name of Your Studio"
+            <input id="studio-name" 
+            name="studioName" type="text" placeholder="Enter the Name of Your Studio"
             className="form-control" 
             defaultValue={studioName}  />
           
@@ -40,7 +42,6 @@ const StudioProfile = ({handleSubmit,  name,
           
         </div>
     </div>
-    {studioType}
      
      <div className="form-group">
     <label className="control-label">Studio Type</label>

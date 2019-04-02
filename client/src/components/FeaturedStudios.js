@@ -19,12 +19,13 @@ render(){
     </div>
 
     <div className="row">
-      {/* <div className="col-md-12"> */}
-        {/* <div className="nonloop-block-13 owl-carousel"> */}
+       <div className="col-md-12"> 
+         <div className="nonloop-block-13 owl-carousel"> 
 
-        {this.props.studio.map(studio=>{
+        {this.props.studio.sort((a, b)=>a.rating.length + b.rating.length).filter((studio, i)=> i < 3)
+        .map((studio)=>{
                       return (
-                        <div className="col-md-4">
+                        
                       <div className="item" key={studio.id}>
                       <div className="block-34">
                         <div className="image">
@@ -40,7 +41,7 @@ render(){
                           </ul>
                         </div>
                       </div>
-                    </div></div>)})}
+                    </div>)})}
 
             {/* <div className="item">
               <div className="block-34">
@@ -57,9 +58,9 @@ render(){
                     <li><strong>Size:</strong> 20m<sup>2</sup></li>
                     <li><strong>Bed Type:</strong> One bed</li>
                   </ul>
-                </div>
+                </div>*/}
               </div>
-            </div> */}
+            </div> 
 
 
              
