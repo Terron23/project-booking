@@ -32,10 +32,13 @@ class CheckoutForm extends Component {
           studioOwner:"",
           cardInfo: "",
           
-        });3
+        });
        console.log(token)
-      
-        if (response.ok) {
+      console.log(response.ok)
+      window.location = "/confirmation";
+      console.log("Purchase Complete!")
+      if (response.ok) {
+         
         console.log("Purchase Complete!")
         }
         }

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import axios from 'axios'
 import { fetchUser } from '../actions';
 import { Link } from 'react-router-dom';
+import Availibility from './Availibility'
 
 
 
@@ -68,22 +69,7 @@ e.preventDefault()
   this.setState({dates})
 
 }
-// handleChange =(e)=>{
-//     //this.setState({formControl: document.getElementsByClassName("dates")})
-//     let time = [] 
-//     time.push({day: e.target.hoursOfOperation.value})
-//     console.log(time);
-//     this.setState({time})
 
-//     console.log("FormDtaes", this.state.formControl)
-// }
-
-// handleSubForm =(e)=>{
-//     let time = [] 
-//     time.push({day: e.target.hoursOfOperation.value})
-//     console.log(time);
-//     this.setState({time})
-// }
 
 handleChange =(e)=>{
 this.setState({studioName: e.target.value})
@@ -127,9 +113,6 @@ studioImage = await cloudResponse.data.url
 const studioUploadResponse = await axios.post('/api/post-listing', {studioName, price, rules, name, email,address1, address2, postalCode, city, region, phone, venue, studioImage, guest, studioType, hoursOfOperation })
 
 // const studioUploadResponse = await axios.post('/api/post-listing', formData)
-
-
-       
 
 }
 
@@ -203,13 +186,10 @@ handleClick =(e)=>{
                   </select>
                   </div>
 
-                  <div className="form-group d-none">
+                  <div className="form-group">
                 <label className="control-label">Availibility</label><br />
-                {/* {this.state.dates.map(dates =>{
-                    return dates
-                })}
-              
-                <a href="" onClick={this.handleDates}>Add Hours of Operation</a> */}
+
+                <a data-toggle="modal" data-target="#myModal">Add Hours of Availibility</a>
                 <input name="hoursOfOperation" value="none" className="d-none hide" />
                   </div>
 

@@ -14,7 +14,6 @@ const ProfileSideBar = ({name, email, studioname, view, social}) =>{
       <div class="profile-userpic">
         <img src="https://www.monmouth.edu/university-advancement/wp-content/uploads/sites/237/2018/08/person-placeholder.jpg" 
         className="img-responsive" alt="" style={{"width": "200px"}}/>
-       
       </div>
 
       <div class="profile-usertitle">
@@ -26,7 +25,7 @@ const ProfileSideBar = ({name, email, studioname, view, social}) =>{
         <p>
       <span> {social.map(social=>{
         if(social.toLowerCase().match("facebook")){
-          return <p><a href={social} target="_blank"><span className="ion ion-logo-facebook"> FaceBook</span></a></p>
+          return <p><span className="ion ion-logo-facebook"> <a href={social} target="_blank">FaceBook</a></span></p>
         }
 
         if(social.toLowerCase().match("instagram")){
@@ -143,6 +142,7 @@ handleSubmit = async (e, form) =>{
   facebook = e.target.facebook.value;
   
   const res = axios.post('/api/update_user', {username, email, twitter, instagram, facebook,})
+  
   }
 
   if(form === 'studios'){

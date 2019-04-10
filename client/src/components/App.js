@@ -9,6 +9,7 @@ import StudioSearch from './Studios/StudioSearch'
 import SingleStudio from './Studios/SingleStudio'
 import Profile from './Profile/Profile'
 import Payment from './Checkout/Payment'
+import Confirmation from './Checkout/OrderConfirmation'
 import NotLoggedIn from './ModalLogin'
 import {connect} from 'react-redux'
 import * as actions from '../actions'
@@ -41,6 +42,7 @@ componentDidMount(){
          <Route path="/userprofile" component={Profile} />
          <Route path="/payment/:studioid" component={Payment} />
          <Route path="/availibility/:studioName" component={Availibility} />
+         <Route path="/confirmation" component={Confirmation} />
          </div>
        </BrowserRouter>
 
