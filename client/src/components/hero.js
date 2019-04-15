@@ -1,60 +1,33 @@
 import React, { Component } from 'react';
-import BG2 from '../images/bg_2.jpg'
-import BG1 from '../images/bg_1.jpg'
-import BG3 from '../images/bg_3.jpg'
 
+import Schedule from './Schedule'
 
 
 export default class Hero extends Component {
   render() {
     return (
-      <div className="block-31" style={{"position": "relative"}}>
+      <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          <h1 class="masthead-heading mb-0">Book & Go</h1>
+          <h2 class="masthead-subheading mb-0">Find, Book, Go</h2>
 
-      <div className="owl-carousel loop-block-31 ">
-
-        <div className="block-30 item" style={{"backgroundImage": `url(${BG1})`}} data-stellar-background-ratio="0.5">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-10">
-                <span className="subheading-sm">Create</span>
-                <h2 className="heading">A Number 1 Hit</h2>
-                <p><a href="/search-studio" className="btn py-4 px-5 btn-primary">Book A Session</a></p>
-              
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="block-30 item" style={{"backgroundImage": `url(${BG2})`}} data-stellar-background-ratio="0.5">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-10">
-                <span className="subheading-sm">Create</span>
-                <h2 className="heading">Passive Income</h2>
-                <p><a href="/search-studio" className="btn py-4 px-5 btn-primary">Book A Session</a></p>
-               
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="block-30 item" style={{"backgroundImage": `url(${BG3})`}} data-stellar-background-ratio="0.5">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-10">
-                <span className="subheading-sm">Create</span>
-                <h2 className="heading">Connections</h2>
-                <p><a href="/search-studio" className="btn py-4 px-5 btn-primary">Book A Session</a></p>
-              
-              </div>
-            </div>
-          </div>
+       <Schedule  />
+       
+          
         </div>
       </div>
-      {/* <Schedule block="block-32"/>
-      <FeaturedStudios /> */}
-    </div>
+      <div class="bg-circle-1 bg-circle"></div>
+      <div class="bg-circle-2 bg-circle"></div>
+      <div class="bg-circle-3 bg-circle"></div>
+  
+    </header>
+  
+     
 
     );
   }
 }
+
 
 

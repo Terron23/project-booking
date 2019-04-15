@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link } from 'react-router-dom'
+
 
 
 class  NavBar extends Component  {  
@@ -28,45 +28,41 @@ handleClick = (id) => {
      case null:
      return 
      case false:
-     return   [<li className="nav-item"><a className="nav-link" href="/sign-up">Add Your Studio</a></li>,
-     <li className="nav-item"><a className="nav-link" href="/sign-up">Sign Up/Login</a></li>]
+     return   [<a className="nav-link" href="/sign-up">Add Your Studio</a>,
+    <a className="nav-link" href="/sign-up">Sign Up/Login</a>].map((value, i)=>{
+       return (<li key={i} className="nav-item">{value}</li>)
+     })
      default:
-     return [<li className="nav-item"><a href="/post-studio" className="nav-link">Add Your Studio</a></li>,
-     <li className="nav-item"><a href="/userprofile" className="nav-link">{this.props.auth.name}'s' Profile</a></li>,
-     <li className="nav-item"><a className="nav-link" href="/api/logout">Logout</a></li>]
+     return [<a href="/post-studio" className="nav-link">Add Your Studio</a>,
+     <a href="/userprofile" className="nav-link">{this.props.auth.name}'s' Profile</a>,
+    <a className="nav-link" href="/api/logout">Logout</a>].map((value, i)=>{
+     return (<li key={i} className="nav-item">{value}</li>)
+     })
    }
  }
  
- handleScroll =(event) => {
-  let scrollTop = event.srcElement.body.scrollTop,
-      itemTranslate = Math.min(0, scrollTop/3 - 90);
 
-  this.setState({
-    newClass: "ftco-navbar-dark"
-  })
 
-}
+
 
   render(){
-let { newClass } = this.state
     return (
-      <nav  className={`navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light`} id="ftco-navbar">
-      <div className="container">
-        <a className="navbar-brand" href="/">Studio Go</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="oi oi-menu"></span> Menu
-        </button>
-  
-        <div className="collapse navbar-collapse" id="ftco-nav">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item"><a href="/search-studio" className="nav-link">Book A Session</a></li>
-            
-          
-            {this.renderContent()}
-          </ul>
-        </div>
-      </div>
-    </nav>
+     
+
+<nav  className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+<div className="container">
+  <a className="navbar-brand" href="/">Book & GO</a>
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="navbarResponsive">
+    <ul className="navbar-nav ml-auto">
+    <li className="nav-item"><a href="/search-studio" className="nav-link">Book A Session</a></li>
+    {this.renderContent()}   
+    </ul>
+  </div>
+</div>
+</nav>
   
     )
     }

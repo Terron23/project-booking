@@ -58,7 +58,7 @@ class CheckoutForm extends Component {
         <div className="container">
         <ul style={{"listStyle": "none"}}>
         {studio.filter(studio=> {
-          return studio._id == studioid 
+          return studio._id === studioid 
         })
         .map(studio => {
           return(<span>
@@ -75,7 +75,7 @@ class CheckoutForm extends Component {
          <form onSubmit={this.handleSubmit}>
          
          {studio.filter(studio=> {
-          return studio._id == studioid 
+          return studio._id === studioid 
         })
         .map(studio => {
           return(<span className="d-none">

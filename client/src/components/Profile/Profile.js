@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Tabs from './Tabs'
-import { fetchStudio, fetchUser, fetchBookings } from '../../actions';
+import { fetchStudio, fetchUser } from '../../actions';
 import axios from 'axios'
 import StudioProfile from './StudioProfile'
 
@@ -128,7 +128,7 @@ handleSubmit = async (e, form) =>{
   let twitter; 
   let instagram; 
   let facebook; 
-  let studioid; 
+ 
 
   console.log(form)
   alert("this works")
@@ -142,11 +142,18 @@ handleSubmit = async (e, form) =>{
   facebook = e.target.facebook.value;
   
   const res = axios.post('/api/update_user', {username, email, twitter, instagram, facebook,})
+
+  if(res.ok){
+    console.log("It Works")
+  }
   
   }
 
   if(form === 'studios'){
     const res = axios.post('/api/update_user', {username, email, twitter, instagram, facebook,})
+    if(res.ok){
+      console.log("It Works")
+    }
     }
 }
 
@@ -203,10 +210,10 @@ return (
 
   handleApi =()=>{
     let { studio } = this.props
-    {studio.map(studio=>{
+    studio.map(studio=>{
   
       return this.setState({email: studio.email, name: studio.name})
-    })}
+    })
    
     console.log(this.state.name)
   }
@@ -219,7 +226,7 @@ console.log()
   render() {
     if(!this.props.studio || !this.props.auth) {return ''}
     let { studio, auth, } = this.props;
-    let {name, email, view , booked} = this.state;
+    let {view , booked} = this.state;
     console.log("Booked", this.props)
 console.log(auth)
     return (
@@ -241,7 +248,7 @@ console.log(auth)
   }
 }
 
-function mapStateToProps({studio, auth, booked}){
+function mapStateToProps({studio, auth}){
   //State from reducers/index.js file  gets passed to header component as props
   return {studio, auth }
 }

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
-var stripe = require("stripe")("sk_test_V6wlaNvsxc7i7lpa0BfseByb");
+const stripe = require("stripe")("sk_test_V6wlaNvsxc7i7lpa0BfseByb");
 const keys = require('../config/keys');
-
+const where = require('node-where');
 require('../models/User.js');
 require('../models/StudioBooked.js');
 
@@ -15,6 +15,10 @@ const Users = mongoose.model('users');
 
 
 module.exports = (app) => {
+
+ app.get('https://json.geoiplookup.io/api?callback=?', function(data) {
+  console.log(JSON.stringify(data, null, 2));
+})
 
 app.get('/auth/google', passport.authenticate('google', {
     
@@ -45,6 +49,7 @@ res.redirect('/');
 });
 
 app.get('/api/current_user', (req, res)=>{
+
 res.send(req.user);
 });
 

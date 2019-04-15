@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+
 
 
 class Tabs extends Component {

@@ -1,6 +1,6 @@
 import { FETCH_BOOKING } from '../actions/types'
 
-export default function(state = 'test', action){
+export default function(state = [], action){
     switch(action.type){
         case FETCH_BOOKING:
         return action.payload || false

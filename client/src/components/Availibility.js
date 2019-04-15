@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios'
 import { fetchUser } from '../actions';
+import DropDown from './assets/DropDown';
+import Input from './assets/Input';
+import Title from './assets/Title';
 
 
 
@@ -10,7 +13,41 @@ constructor(props){
 super(props);
 this.state ={
     alert: "d-none",
-    dates: [],
+    dates: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    timeSlot: [<form key={0} className="form-inline col-md-12" onSubmit={this.handleSubmit}>         
+    <div className="form-group mb-2">
+    <DropDown options={this.handDays}
+ 
+    name="days" 
+    type="text" 
+    label="Days of the Week"  />
+         
+     </div>
+ 
+     <div className="form-group mb-2 mx-sm-3">
+      
+     <Input name="timeFrom" type="text" label="Start Time (EX: 9:30 AM)"  placeholder="Enter Start Time" />
+ 
+         </div>
+   
+         <div className="form-group mb-2 mx-sm-3">
+     
+         <Input name="endTime" 
+         type="text" label="End Time (EX: 9:30 PM)" 
+          placeholder="Enter Time Finished" 
+         
+          />
+         </div>
+     
+ 
+         <div className="form-group mb-2 mx-sm-3">
+    <button className="btn btn-secondary mb-2" type="submit">Submit</button>
+    </div>
+                
+            </form>],
+    error1: "",
+    error2: ""
+    
 }
 }
 
@@ -19,98 +56,103 @@ componentDidMount(){
     this.props.fetchUser()
 }
 
+handDays =()=>{
+    return this.state.dates.map((days,i)=>{
+        return <option key={i}>{days}</option>
+    })
+}
 
 handleDates =(e)=>{
 e.preventDefault()
-   let dates = [...this.state.dates] 
+   let timeSlot = [...this.state.timeSlot] 
 
-   dates.push([<form key={dates.length+1} id="myForm" className="form-inline col-md-12" onSubmit={this.handleSubmit}>         
+   timeSlot.push([<form key={timeSlot.length+1} className="form-inline col-md-12" onSubmit={this.handleSubmit}>         
  
    <div className="form-group mb-2">
-   <label>Days: </label> 
-   <select  name={`hoursOfOperation`} className="dates form-control">
-    <option>Sunday</option>
-    <option>Monday</option>
-    <option>Tuesday</option>
-    <option>Wednesday</option>
-    <option>Thursday</option>
-    <option>Friday</option>
-    <option>Saturday</option>
-    </select>
+   <DropDown options={this.handDays}
+
+   name="days" 
+   type="text" 
+   label="Days of the Week"  />
+        
     </div>
 
     <div className="form-group mb-2 mx-sm-3">
-       <label>From:</label> <input name={`starttime`}  type="time" defaultValue="" className="timepicker dates no form-control" />
+     
+    <Input name="timeFrom" type="text" label="Start Time (EX: 9:30 AM)"  placeholder="Enter Start Time" />
+
         </div>
   
         <div className="form-group mb-2 mx-sm-3">
-        <label>To:</label> 
-        <input name={`endtime`} type="time" defaultValue="" className="form-control timepicker dates"/>
-        </div>
-
-       
-        <input name={`studioname`} type="text" value={this.props.match.params.studioName} className="d-none"/>
+    
+        <Input name="endTime" 
+        type="text" label="End Time (EX: 9:30 PM)" 
+         placeholder="Enter Time Finished" 
         
+         />
+        </div>
+    
 
         <div className="form-group mb-2 mx-sm-3">
-   <button className="btn btn-primary mb-2" type="submit">Submit</button>
+   <button className="btn btn-secondary mb-2" type="submit">Submit</button>
    </div>
                
            </form>])
 
 
-  this.setState({dates})
+  this.setState({timeSlot})
 
 }
+
+
 
 
 handleSubmit = async (event) => {
-event.preventDefault();
+    event.preventDefault();
+    
+    //console.log(files[0])
+    
+    let day = event.target.days.value
+    let endtime= event.target.endTime.value
+    let starttime = event.target.timeFrom.value
+    let studioname = ''
+    
+    console.log(starttime, endtime, day, studioname)
 
-//console.log(files[0])
+  
+    try{
+  
+      
+        const response = await axios.post('/api/post-listing-time', {starttime, endtime, day , studioname})
+        console.log(response)
+    
 
-let day = event.target.hoursOfOperation.value
-let endtime= event.target.endtime.value.toString()
-let starttime = event.target.starttime.value.toString()
-let studioname = event.target.studioname.value
-
-
-console.log(starttime, endtime, day, studioname)
-
-
-try{
-const response = await axios.post('/api/post-listing-time', {starttime, endtime, day , studioname})
-console.log(response)
-}
-catch(err){
-
-throw err;3
-}
-
-}
+    
+  
+    }
+    catch(err){
+    
+    throw err;
+    }
+    
+    }
 
   render() {
       if (!this.props.auth) {
           return ''
       }
-      const { auth } = this.props
+  
     return (
     <div className="container-fluid site-section">
   
-    <div className="container">
-    <h3>Add Hours of Availibility</h3>
-    <hr />
+   <Title header="Hours of Availibility" margin={0} />
+
+ {this.state.timeSlot}
  
-  {this.state.dates.map(dates=>{
-      if (!dates){
-          return ''
-      }
-      return dates
-  })}
 
      <a href="" onClick={this.handleDates}>Add Hours of Operation</a>
       </div>
-      </div>
+     
     );
   }
 }

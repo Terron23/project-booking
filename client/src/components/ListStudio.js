@@ -4,6 +4,9 @@ import axios from 'axios'
 import { fetchUser } from '../actions';
 import { Link } from 'react-router-dom';
 import Availibility from './Availibility'
+import Title from './assets/Title'
+import DropDown from './assets/DropDown'
+import Input from './assets/Input'
 
 
 
@@ -18,6 +21,9 @@ this.state ={
     from: [],
     formControl: null,
     studioName:"",
+    region: ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'],
+    venue: ['Home', 'Business', 'Online'],
+    studiotype: ['Recording - Music', 'Recording - Podcast/Radio', 'Art', 'Film', 'Yoga', 'Spa', 'Photography'],
 }
 }
 
@@ -35,48 +41,9 @@ handleFiles = (event) => {
 
 
 
-handleDates =(e)=>{
-e.preventDefault()
-   let dates = [...this.state.dates] 
- 
-   dates.push([<form >
-       <div className="row" key={dates.length}>
-       <div className="col-md-4">
-   <div className="form-group">
-   Days
-   <select  onChange={this.handleChange} name={`hoursOfOperation`} className="form-control dates" defalutValue="Sunday">
-    <option>Sunday</option>
-    <option>Monday</option>
-    <option>Tuesday</option>
-    <option>Wednesday</option>
-    <option>Thursday</option>
-    <option>Friday</option>
-    <option>Saturday</option>
-    </select>
-    </div>
-    </div>
-    <div className="col-md-4">
-       From: <input  name={`timefrom`}  type="time" defaultValue="" className="form-control timepicker dates"/>
-        </div>
-        <div className="col-md-4">
-        To: <input   name={`timeto`} type="time" defaultValue="" className="form-control timepicker dates"/>
-        </div>
-    </div>
-    <button onClick={this.handleSubForm} >Submit</button>
-    </form>])
 
 
-  this.setState({dates})
-
-}
-
-
-handleChange =(e)=>{
-this.setState({studioName: e.target.value})
-console.log(this.state.studioName)
-}
-
-handleSubmit = async (event) => {
+handleSubmit = (event) => {
 event.preventDefault();
 
 
@@ -92,8 +59,8 @@ let phone = event.target.phone.value
 let venue = event.target.venue.value
 let studioName =  event.target.studioName.value
 let price =  event.target.price.value
-let rules = event.target.rules.value
-let guest = event.target.guest.value
+let rules = ""
+let guest = 0
 let studioType = event.target.studioType.value
 let hoursOfOperation = event.target.hoursOfOperation.value
 let files = this.state.files
@@ -104,22 +71,35 @@ const formData = new FormData();
 formData.append('file', files)
 formData.append('upload_preset', 'nyv0ihyq')
 
+axios.post(`https://api.cloudinary.com/v1_1/etlt/image/upload`, formData)
+.then(cloudResponse=>{
+    let studioImage = cloudResponse.data.url;
+    axios.post('/api/post-listing', 
+        {studioName, price, rules, name, 
+        email,address1, address2, postalCode, city, region, phone, 
+        venue,  studioImage, guest, studioType, hoursOfOperation })
+        .then(res=>{
+            this.setState({alert: "alert alert-success"});
+        })
+})
 
-try {
-const cloudResponse = await axios.post(`https://api.cloudinary.com/v1_1/etlt/image/upload`, formData)
-
-studioImage = await cloudResponse.data.url
-
-const studioUploadResponse = await axios.post('/api/post-listing', {studioName, price, rules, name, email,address1, address2, postalCode, city, region, phone, venue, studioImage, guest, studioType, hoursOfOperation })
-
-// const studioUploadResponse = await axios.post('/api/post-listing', formData)
 
 }
 
-catch(err){
-throw err;
+handleStudioTypes =()=>{
+    return this.state.studiotype.map(types=>{
+       
+            return <option>{types}</option>
+        
+    });
 }
 
+handleVenue =()=>{
+    return this.state.venue.map((types , i) =>{
+     
+            return <option key={i}>{types}</option>
+    
+    });
 }
 
 handleClick =(e)=>{
@@ -131,6 +111,12 @@ handleClick =(e)=>{
         this.setState({alert: "d-none"});
     }
 }
+
+handleRegion =()=>{
+    return this.state.region.map((zip,i)=>{
+   return <option key={i}>{zip}</option>
+     })
+   }
 
   render() {
       if (!this.props.auth) {
@@ -146,189 +132,41 @@ handleClick =(e)=>{
     </div>
   
     <div className="container">
-    <h3>Add Your Studio</h3>
-    <hr />
+   <Title header="Add Your Studio" />
     	 <form id="myForm" className="form-horizontal col-md-6" onSubmit={this.handleSubmit}>
         
             <fieldset>
-
-                <div className="form-group">
-                    <label className="control-label">Studio Name</label>
-                    <div className="form-group">
-                        <input id="studio-name" name="studioName" type="text" placeholder="Enter the Name of Your Studio"
-                        className="form-control" 
-                        defaultValue="" onChange={this.handleChange} />
-                      
-                    </div>
-                </div>
-
-                 <div className="form-group">
-                    <label className="control-label">Price</label>
-                    <div className="form-group">
-                        <input id="price" name="price" type="number" min="10" step="1" max="300" placeholder=""
-                        className="form-control" 
-                        defaultValue=""/>
-                      
-                    </div>
-                </div>
-
-                 
-                 <div className="form-group">
-                <label className="control-label">Studio Type</label>
-                <select name="studioType" className="form-control">
-                    {/* Need Studio Table in DB */}
-                    <option value="Recording - Music">Recording - Music</option>
-                    <option value="Recording - Podcast">Recording - Podcast</option>
-                    <option value="Yoga">Yoga</option>
-                    <option value="Photography">Photography</option>
-                    <option value="Film">Film</option>
-                    <option value="Art">Art</option>
-                  </select>
-                  </div>
-
+            <Input name="name1" type="text" label="Contact Name"  placeholder="Enter Full Name Here" />
+            <Input name="studioName" label='Studio Name' type="text" placeholder="Enter the Name of Your Studio" />
+            <Input name="price" label='Price' type="number" placeholder="Enter your prices" />
+            <DropDown options={this.handleStudioTypes} name="studioType" placeholder="Enter Studio Type"/>
+             <DropDown options={this.handleVenue} name="venue" type="text" label="Venue"  placeholder="Enter Venue"/>
                   <div className="form-group">
                 <label className="control-label">Availibility</label><br />
 
                 <a data-toggle="modal" data-target="#myModal">Add Hours of Availibility</a>
                 <input name="hoursOfOperation" value="none" className="d-none hide" />
                   </div>
-
-                    
-
-                 <div className="form-group">
-                    <label className="control-label">Rules</label>
-                    <div className="form-group">
-                        <textarea id="rules" name="rules"  max="2500" placeholder="Example: Minimum 2 hr sessions No smoking and No alcohol"
-                          className="form-control" 
-                          defaultValue=""></textarea>
-                      
-                      
-                    </div>
-                </div>
-
-
-                 <div className="form-group">
-                    <label className="control-label">Number of Guest Allowed</label>
-                    <div className="form-group">
-                        <input id="guest" name="guest" type="number" min="1" step="1" max="300" placeholder=""
-                        className="form-control" 
-                        defaultValue=""/>
-                      
-                    </div>
-                </div>
-
- 
-
-                <div className="form-group">
-                    <label className="control-label">Full Name</label>
-                    <div className="form-group">
-                        <input id="full-name" name="name1" type="text" placeholder="full name"
-                        className="form-control" 
-                        defaultValue={auth.name}/>
-                        <p className="help-block"></p>
-                    </div>
-                </div>
-
-                   <div className="form-group">
-                    <label className="control-label">Email</label>
-                    <div className="form-group">
-                        <input id="full-name" name="email" type="email" placeholder="email"
-                        className="form-control"
-                        defaultValue={auth.email}/>
-                        <p className="help-block"></p>
-                    </div>
-                </div>
-
-             
-                   <div className="form-group">
-                    <label className="control-label">Phone</label>
-                    <div className="form-group">
-                        <input id="phone" name="phone" type="phone" placeholder="Phone Number"
-                        className="form-control"
-                        defaultValue={""}/>
-                       
-                    </div>
-                </div>
            
-                <div className="form-group">
-                    <label className="control-label">Address Line 1</label>
-                    <div className="form-group">
-                        <input id="address-line1" name="address1" type="text" placeholder="address line 1"
-                        className="form-control" defaultValue=""/>
-                        <p className="help-block">Street address, P.O. box, company name, c/o</p>
-                    </div>
-                </div>
+          <Input name="email" type="email" label="Bussiness Email"  placeholder="Email" />
+          <Input name="phone" type="phone" label="Bussiness Phone Number"  placeholder="Enter Phone Number" />
+          <Input name="address1" type="text" label="Address1"  placeholder="Enter Street Address" />
+          <Input name="address2" type="text" label="Address2"  placeholder="Enter Street Address" />
+          <Input name="city" type="text" label="City"  placeholder="Enter Street City" />
+          <DropDown options={this.handleRegion} name="region" type="text" label="State"  placeholder="Enter State"/>
+          <Input name="postalCode" type="text" label="Zip Code"  placeholder="Enter Zip Code" />
+
+          <Input name="file" type="file" label="AddImages"  placeholder="Upload Photos" handleChange={this.handleFiles} required/>
+
                 
-                <div className="form-group">
-                    <label className="control-label">Address Line 2</label>
-                    <div className="form-group">
-                        <input id="address-line2" name="address2" type="text" placeholder="address line 2"
-                        className="form-control"
-                        defaultValue=""/>
-                      
-                    </div>
-                </div>
-         
-                <div className="form-group">
-                    <label className="control-label">City / Town</label>
-                    <div className="form-group">
-                        <input id="city" name="city" type="text" placeholder="city" className="form-control" defaultValue=""/>
-                        
-                    </div>
-                </div>
-            
-                <div className="form-group">
-                    <label className="control-label">State / Province / Region</label>
-                    <div className="form-group">
-                        <input id="region" name="region" type="text" placeholder="state / province / region"
-                        className="form-control" defaultValue=""/>
-                      
-                    </div>
-                </div>
-
-                   <div className="form-group">
-                    <label className="control-label">Venue</label>
-                    <div className="form-group">
-                       <select name="venue" className="form-control">
-                           <option>Home </option>
-                           <option>Business</option>
-                           </select>
-                      
-                    </div>
-                </div>
-              
-                <div className="form-group">
-                    <label className="control-label">Zip / Postal Code</label>
-                    <div className="form-group">
-                        <input id="postal-code" name="postalCode" type="text" placeholder="zip or postal code"
-                        className="form-control" defaultValue=""/>
-                        
-                    </div>
-                </div>
-              
-               
-          
-                <label className="control-label">Add Studio Images</label>   
-        <div className="custom-file form-group">
-       
-        <div className="form-group">
-
-<input className="form-control" type="file"  onChange={this.handleFiles} multiple />
-  </div>
-</div>
 {this.state.formControl}
 <hr />
 
    <div className="form-group row">
    
-<button className="btn btn-primary" onClick={this.handleClick} type="submit">Submit</button>
+<button className="btn btn-secondary" type="submit">Submit</button>
 </div>
-
-
-                     
-                 
-            
-            </fieldset>
+</fieldset>
         </form>
         <div className="form-group row">
 <Link to={`/availibility/${studioName}`} className={`btn btn-primary ${alert}`} >Add Availibility</Link>
@@ -347,4 +185,3 @@ function mapStateToProps({ studio, auth }) {
   }
   
   export default connect(mapStateToProps, { fetchUser })(ListStudio);
-

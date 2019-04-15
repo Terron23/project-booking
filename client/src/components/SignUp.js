@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Title from './assets/Title'
 
 
 
@@ -8,13 +9,13 @@ const LeftSide = ({oauth}) =>{
   return(
   <div className="col-md-6">
 
-    <form action="/action_page.php">
+    <form action="">
   <div className="form-group">
-    <label for="email">Email address:</label>
+    <label htmlFor="email">Email address:</label>
     <input type="email" className="form-control" id="email" />
   </div>
   <div className="form-group">
-    <label for="pwd">Password:</label>
+    <label htmlFor="pwd">Password:</label>
     <input type="password" className="form-control" id="pwd" />
   </div>
   <div className="checkbox">
@@ -44,8 +45,8 @@ class SignUp extends Component  {
 
   render(){
     return (
-    <div style={{"marginTop": "50px"}} className="container">
-    <h2 className="">Sign In</h2>	
+    <div  className="container">
+   <Title header="Sign In/Sign Up" classProp={`container`}/>
 
      <RightSide  />
      <hr />
