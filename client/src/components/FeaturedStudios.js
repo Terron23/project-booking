@@ -1,75 +1,22 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { fetchStudio} from '../actions';
-import Image from './assets/Image'
-import CardInfo from './assets/CardInfo'
+
 
 
 
 
 class FeaturedStudios extends Component {
 
-
-  componentDidMount(){
-    this.props.fetchStudio()
-  }
-  
-  featureType =()=>{
-if(this.props.type === 'top-rated'){
-  return this.props.studio.sort((a, b)=>a.rating.length + b.rating.length)
-  .filter((studio, i)=> i <= this.props.totalStudios)
-  .map((studio)=>{
-                return (
-                  
-                  <div className="col-lg-3 col-md-3" key={studio._id}>
-                    <Image 
-                    src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
-                 
-                  <CardInfo studioName={studio.studioName} 
-                  price={studio.price} 
-                  _id={studio._id} 
-                  studioType={studio.studioType}/>   
-              </div>)})
-}
-
-
-return this.props.studio
-.sort((a, b)=>a.rating.length + b.rating.length)
-.filter((studio, i)=> i <= this.props.totalStudios)
-.filter(studio => this.props.search === studio.studioType)
-.map((studio)=>{
-              return (
-                
-                  
-                <div className="col-lg-3 col-md-3" key={studio._id}>
-              
-               
-                    <Image 
-                    src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
-                 
-                  <CardInfo studioName={studio.studioName} 
-                  price={studio.price} 
-                  _id={studio._id} 
-                  studioType={studio.studioType}/>
-                 
-                 
-                
-              </div>)})
-  }
-
 render(){
-    if(this.props.studio.length <   1){
-      return ''
-    } 
+
     return(
 
 
 <div className="container-fluid-secondary ">
-
-
       <div className="row ">
      
-              {this.featureType()}
+              {this.props.featureType()}
 
                     </div>
         </div>
@@ -81,11 +28,8 @@ render(){
 
 
 
-function mapStateToProps({ studio }) {
-  return { studio };
-}
 
-export default connect(mapStateToProps, { fetchStudio })(FeaturedStudios);
+export default FeaturedStudios;
 
 
 // {studio

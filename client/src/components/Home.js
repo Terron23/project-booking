@@ -8,7 +8,9 @@ import BG3 from '../images/03.jpg'
 import Title from './assets/Title'
 import Portfolio from './assets/Portfolio'
 import {connect} from 'react-redux';
-import {fetchLocation} from '../actions';
+import {fetchLocation, fetchStudio} from '../actions';
+import Image from './assets/Image';
+import CardInfo from './assets/CardInfo';
 
 class Home extends Component {
 
@@ -16,7 +18,51 @@ class Home extends Component {
 
   componentDidMount(){
     this.props.fetchLocation()
+    this.props.fetchStudio()
   }
+
+
+  featureType =()=>{
+      return this.props.studio.sort((a, b)=>a.rating.length + b.rating.length)
+      .filter((studio, i)=>i<=3)
+      .map((studio)=>{
+                    return (
+                      
+                      <div className="col-lg-3 col-md-3" key={studio._id}>
+                        <Image 
+                        src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
+                     
+                      <CardInfo studioName={studio.studioName} 
+                      price={studio.price} 
+                      _id={studio._id} 
+                      studioType={studio.studioType}/>   
+                  </div>)})
+    }
+    
+    
+    // return this.props.studio
+    // .sort((a, b)=>a.rating.length + b.rating.length)
+    // .filter((studio, i)=> i <= this.props.totalStudios)
+    // .filter(studio => this.props.search === studio.studioType)
+    // .map((studio)=>{
+    //               return (
+                    
+                      
+    //                 <div className="col-lg-3 col-md-3" key={studio._id}>
+                  
+                   
+    //                     <Image 
+    //                     src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
+                     
+    //                   <CardInfo studioName={studio.studioName} 
+    //                   price={studio.price} 
+    //                   _id={studio._id} 
+    //                   studioType={studio.studioType}/>
+                     
+                     
+                    
+    //               </div>)})
+    //   }
 
 
   handleSubmit =(e)=>{
@@ -27,7 +73,7 @@ class Home extends Component {
   }
 
   render() {
-    if(!this.props.locate){
+    if(!this.props.locate || !this.props.studio){
       return ''
     }
     
@@ -37,13 +83,14 @@ const img2 = <img src={`${BG2}`} className={`${classProp}`} style={{borderRadius
 const img3 = <img src={`${BG3}`} className={`${classProp}`} style={{borderRadius: '50%'}} alt='img3'/>
     return (
       <div>
-        <Hero handleSubmit={this.handleSubmit} 
+        <Hero 
+        handleSubmit={this.handleSubmit} 
         locate={this.props.locate}
         />
 
 
 <Title header="Featured Offers Near You" subtitle='Explore Top Rated Venues wherever you are!'/>
-<FeaturedStudios type="top-rated" totalStudios={3} />
+<FeaturedStudios type="top-rated" totalStudios={5} featureType={this.featureType}/>
 
 <Title header="Explore" subtitle='Check out venues around the world'>
 <Portfolio />
@@ -85,9 +132,9 @@ infoText="Don't just think it, write it or freestyle it... Record It! Search thr
 }
 
 
-function mapStateToProps({locate}) {
-  return { locate };
+function mapStateToProps({locate, studio}) {
+  return { locate , studio};
 }
 
-export default connect(mapStateToProps, {  fetchLocation })(Home);
+export default connect(mapStateToProps, {  fetchLocation, fetchStudio })(Home);
 

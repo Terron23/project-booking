@@ -5,11 +5,14 @@ import moment from 'moment'
 import Title from '../assets/Title'
 import FeaturedStudio from '../FeaturedStudios'
 import MapContainer from '../assets/GoogleMap'
+import {connect} from 'react-redux';
+import {fetchLocation, fetchStudio} from '../../actions';
+import Image from '../assets/Image';
+import CardInfo from '../assets/CardInfo';
 
 
 
-
-export default class StudioSearch extends Component {
+class StudioSearch extends Component {
   constructor(props){
     super(props);
 this.state = {
@@ -29,7 +32,37 @@ this.state = {
 
   }
 
+  componentDidMount(){
+    this.props.fetchLocation()
+    this.props.fetchStudio()
+  }
 
+
+  featureType =()=>{
+ return this.props.studio
+  .sort((a, b)=>a.rating.length + b.rating.length)
+  .filter((studio, i)=> i <= 1000)
+
+  .filter(studio => this.state.search.toLowerCase().match(studio.studioType.toLowerCase()))
+  .map((studio)=>{
+                return (
+                  
+                    
+                  <div className="col-lg-3 col-md-3" key={studio._id}>
+                
+                 
+                      <Image 
+                      src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
+                   
+                    <CardInfo studioName={studio.studioName} 
+                    price={studio.price} 
+                    _id={studio._id} 
+                    studioType={studio.studioType}/>
+                   
+                   
+                  
+                </div>)})
+    }
 
 handleTime =(e)=>{
 
@@ -71,6 +104,9 @@ handleChange =(e)=>{
 }
 
   render() {
+    if(!this.props.studio){
+      return 'Loading...'
+    }
  
    console.log(this.props)
    console.log(this.state)
@@ -100,11 +136,7 @@ handleChange =(e)=>{
 <hr />  
 </div>
 
-<FeaturedStudio 
-totalStudios={1000000} 
-locate={this.state.location}
-search={this.state.search}
-/>
+<FeaturedStudio featureType={this.featureType}/>
        
      
         </div>
@@ -115,6 +147,12 @@ search={this.state.search}
 }
 
 
+
+function mapStateToProps({locate, studio}) {
+  return { locate , studio};
+}
+
+export default connect(mapStateToProps, {  fetchLocation, fetchStudio })(StudioSearch);
 
 
 
