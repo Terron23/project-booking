@@ -2,8 +2,7 @@
 
 
 import React , {Component} from 'react';
-import {connect} from 'react-redux';
-import {fetchLocation} from '../actions';
+
 
 
 class Schedule extends Component  {
@@ -15,32 +14,39 @@ this.state={
 }
 }
   
-  componentDidMount(){
-    this.props.fetchLocation()
-  }
+
 
   render(){
-    if(!this.props.locate){
-      return ''
-    }
-    let {studioTypeFilter, time, handleTime, handleAvailibility, block, locate, classProp, buttonTitle, search} = this.props
+
+    let {studioTypeFilter, time, 
+      handleTime, 
+      handleAvailibility, 
+      block, locate, 
+      classProp, 
+      buttonTitle, 
+      search, handleChange,
+      handleSubmit} = this.props
    
   return(
   
       <div className='container'>
-        <form onSubmit={handleAvailibility}>
+        <form onSubmit={handleSubmit}>
   <div className="row">
   <div className="col-md-8 form-group">
       <input  name='search' 
       style={styles.inputStyle} 
       defaultValue={search}
       type="text" 
-      className="form-control input-lg" placeholder="Search" />
+      className="form-control input-lg" 
+      placeholder="Search" 
+      onChange={handleChange}
+      />
 </div>
 
 <div className="col-md-4 form-group">
 
-      <input name="location" onChange={this.handleSchedule} style={styles.inputStyle}  defaultValue={locate} type="text" className="form-control input-lg"  />
+      <input name="location" onChange={this.handleSchedule} style={styles.inputStyle} 
+       defaultValue={locate} type="text" className="form-control input-lg"  />
 </div>
 
       </div>
@@ -58,12 +64,9 @@ const styles ={
   }
 }
 
-  
-function mapStateToProps({locate}) {
-  return { locate };
-}
 
-export default connect(mapStateToProps, {  fetchLocation })(Schedule);
+
+export default Schedule;
 
 
 

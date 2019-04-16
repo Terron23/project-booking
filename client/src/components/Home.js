@@ -43,7 +43,7 @@ const img3 = <img src={`${BG3}`} className={`${classProp}`} style={{borderRadius
 
 
 <Title header="Featured Offers Near You" subtitle='Explore Top Rated Venues wherever you are!'/>
-<FeaturedStudios type="near-you" totalStudios={3} />
+<FeaturedStudios type="top-rated" totalStudios={3} />
 
 <Title header="Explore" subtitle='Check out venues around the world'>
 <Portfolio />

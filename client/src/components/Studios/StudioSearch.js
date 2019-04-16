@@ -23,8 +23,8 @@ this.state = {
   availibility:[],
   guest: "",
   state: "",
-  search: "",
-  location: "",
+  search: this.props.location.state.search,
+  location: this.props.location.state.location,
 }
 
   }
@@ -44,23 +44,25 @@ handleTime =(e)=>{
 
 handleAvailibility = (e) =>{
   e.preventDefault();
-  
-  let time = e.target.calendar.value.split("T").pop()
-  let day = e.target.calendar.value.split("T").shift()
-  let m = moment(day, "YYYY-MM-DD");
-  let dow = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-  let guest = e.target.guest.value
   let location = e.target.location.value;
-  let state = e.target.state.value;
-  console.log(time);
+  let search = e.target.search.value;
+  // let time = e.target.calendar.value.split("T").pop()
+  // let day = e.target.calendar.value.split("T").shift()
+  // let m = moment(day, "YYYY-MM-DD");
+  // let dow = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  // let guest = e.target.guest.value
+  // let state = e.target.state.value;
+  // console.log(time);
   //console.log(dow[m.day()]);
 
-  this.setState({
-    filterStudioType: e.target.studioType.value, 
-    time, day:dow[m.day()],
-  guest, location,
-  state,
-  })
+  // this.setState({
+  //   filterStudioType: e.target.studioType.value, 
+  //   time, day:dow[m.day()],
+  // guest, location,
+  // state,
+  // })
+
+  this.setState({location, search})
 console.log(this.state.location)
 }
 
@@ -79,20 +81,19 @@ handleChange =(e)=>{
    
    
      
-    <div className="site-section bg-light">
+    <div className="bg-light-gray">
 
-      <div className="container-fluid-gallery">
+      <div className="container-fluid">
       
       <Schedule
-      studioTypeFilter={this.handleBooking}
-      handleAvailibility={this.handleAvailibility}
-      handleTime ={this.handleTime}
+      search ={this.state.search}
+      locate={this.state.location}
       time = {this.state.time}
       classProp={`btn btn-secondary btn-lg`}
       buttonTitle="Search"
-      locate={this.props.location.state.location}
-      search={this.props.location.state.search}
+      handleSubmit ={this.handleAvailibility}
       />
+
 <div className="container">
 <hr />
 <p>Filter </p>
@@ -101,8 +102,8 @@ handleChange =(e)=>{
 
 <FeaturedStudio 
 totalStudios={1000000} 
-locate={this.props.location.state.location ? this.props.location.state.location: null}
-search={this.props.location.state.search}
+locate={this.state.location}
+search={this.state.search}
 />
        
      

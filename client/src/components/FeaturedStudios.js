@@ -21,7 +21,7 @@ if(this.props.type === 'top-rated'){
   .map((studio)=>{
                 return (
                   
-                <div className="col-lg-3 col-md-3 image-gallery" key={studio._id}>
+                  <div className="col-lg-3 col-md-3" key={studio._id}>
                     <Image 
                     src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
                  
@@ -58,7 +58,9 @@ return this.props.studio
   }
 
 render(){
-    
+    if(this.props.studio.length <   1){
+      return ''
+    } 
     return(
 
 

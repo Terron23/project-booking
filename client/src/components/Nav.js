@@ -57,7 +57,7 @@ handleClick = (id) => {
   </button>
   <div className="collapse navbar-collapse" id="navbarResponsive">
     <ul className="navbar-nav ml-auto">
-    <li className="nav-item"><a href="/search-studio" className="nav-link">Book A Session</a></li>
+    {/* <li className="nav-item"><a href="/search-studio" className="nav-link">Book A Session</a></li> */}
     {this.renderContent()}   
     </ul>
   </div>

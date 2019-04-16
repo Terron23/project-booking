@@ -14,8 +14,8 @@ export default class Hero extends Component {
           <h2 class="masthead-subheading mb-0">Find, Book, Go</h2>
 
        <Schedule 
-        handleAvailibility={this.props.handleSubmit} 
-       locate ={this.props}
+        handleSubmit={this.props.handleSubmit} 
+       locate ={this.props.locate}
        />
        
           
