@@ -14,39 +14,11 @@ super(props);
 this.state ={
     alert: "d-none",
     dates: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    timeSlot: [<form key={0} className="form-inline col-md-12" onSubmit={this.handleSubmit}>         
-    <div className="form-group mb-2">
-    <DropDown options={this.handDays}
- 
-    name="days" 
-    type="text" 
-    label="Days of the Week"  />
-         
-     </div>
- 
-     <div className="form-group mb-2 mx-sm-3">
-      
-     <Input name="timeFrom" type="text" label="Start Time (EX: 9:30 AM)"  placeholder="Enter Start Time" />
- 
-         </div>
-   
-         <div className="form-group mb-2 mx-sm-3">
-     
-         <Input name="endTime" 
-         type="text" label="End Time (EX: 9:30 PM)" 
-          placeholder="Enter Time Finished" 
-         
-          />
-         </div>
-     
- 
-         <div className="form-group mb-2 mx-sm-3">
-    <button className="btn btn-secondary mb-2" type="submit">Submit</button>
-    </div>
-                
-            </form>],
+    timeSlot: [],
+    dateArr:[],
     error1: "",
-    error2: ""
+    error2: "",
+    reveal: false,
     
 }
 }
@@ -66,74 +38,67 @@ handleDates =(e)=>{
 e.preventDefault()
    let timeSlot = [...this.state.timeSlot] 
 
-   timeSlot.push([<form key={timeSlot.length+1} className="form-inline col-md-12" onSubmit={this.handleSubmit}>         
- 
-   <div className="form-group mb-2">
+   timeSlot.push([<form key={timeSlot.length+1} className="col-md-12" onSubmit={this.handleSchedule}>         
+ <div className="row">
+   <div className="form-group col-md-3">
    <DropDown options={this.handDays}
-
    name="days" 
    type="text" 
    label="Days of the Week"  />
-        
     </div>
 
-    <div className="form-group mb-2 mx-sm-3">
-     
+    <div className="form-group col-md-3">
     <Input name="timeFrom" type="text" label="Start Time (EX: 9:30 AM)"  placeholder="Enter Start Time" />
-
         </div>
   
-        <div className="form-group mb-2 mx-sm-3">
-    
+        <div className="form-group col-md-3">
         <Input name="endTime" 
         type="text" label="End Time (EX: 9:30 PM)" 
          placeholder="Enter Time Finished" 
-        
          />
         </div>
-    
-
-        <div className="form-group mb-2 mx-sm-3">
+        <div className="form-group col-md-3">
+        <br />
    <button className="btn btn-secondary mb-2" type="submit">Submit</button>
    </div>
-               
-           </form>])
+   </div>     
+</form>])
 
 
   this.setState({timeSlot})
 
 }
 
+handleList=()=>{
+    return this.state.dateArr.map((time, i)=>{
+            return<div key={i}>{time.day}: {time.starttime} - {time.endtime}</div>
+        })
+}
 
-
-
-handleSubmit = async (event) => {
+handleSchedule= (event) =>{
     event.preventDefault();
-    
-    //console.log(files[0])
-    
     let day = event.target.days.value
     let endtime= event.target.endTime.value
     let starttime = event.target.timeFrom.value
-    let studioname = ''
-    
-    console.log(starttime, endtime, day, studioname)
+    let dateArr =[...this.state.dateArr]
+    console.log()
+   dateArr.push({day, starttime, endtime});
+  this.setState({dateArr, reveal:true})
+}
 
-  
-    try{
-  
-      
-        const response = await axios.post('/api/post-listing-time', {starttime, endtime, day , studioname})
-        console.log(response)
-    
+handleSubmit = (event) => {
+    event.preventDefault();
+    let studioname = this.props.match.params.studioName
+    let studioid = this.props.match.params.studioid
 
-    
-  
-    }
-    catch(err){
-    
-    throw err;
-    }
+let schedule = this.state.dateArr
+    axios.post('/api/post-listing-time', {schedule, studioname, studioid})
+    .then(res => {
+        console.log(this.props)
+        console.log("sanity check")
+        this.props.history.push('/confirmation')
+    })
+    this.props.history.push('/confirmation')
     
     }
 
@@ -143,16 +108,34 @@ handleSubmit = async (event) => {
       }
   
     return (
-    <div className="container-fluid site-section">
-  
-   <Title header="Hours of Availibility" margin={0} />
-
- {this.state.timeSlot}
- 
-
-     <a href="" onClick={this.handleDates}>Add Hours of Operation</a>
+    <div className="container">
+   
+   <Title header="Hours of Availibility"  />
+   <div className="row">
+   <div className="col-md-9">
+      {this.state.timeSlot}
+      <br />
+      <div className="row">
+      <div className="col-md-4">
+     <button className={`btn btn-block btn-primary`} onClick={this.handleDates}>Add More Dates</button>
+     </div>
+     { this.state.reveal ?
+      <div className="col-md-4">
+      <button className={`btn btn-block btn-secondary`} onClick={this.handleSubmit}>Submit Schedule</button>
       </div>
-     
+     :""}
+</div>
+     </div>
+  
+
+
+<div className="col-md-3">
+   {this.handleList()}
+   </div>
+      </div>
+
+      </div>
+   
     );
   }
 }

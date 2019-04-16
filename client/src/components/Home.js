@@ -7,18 +7,39 @@ import BG2 from '../images/02.jpg'
 import BG3 from '../images/03.jpg'
 import Title from './assets/Title'
 import Portfolio from './assets/Portfolio'
+import {connect} from 'react-redux';
+import {fetchLocation} from '../actions';
 
 class Home extends Component {
 
-  
+
+
+  componentDidMount(){
+    this.props.fetchLocation()
+  }
+
+
+  handleSubmit =(e)=>{
+    e.preventDefault();
+    this.props.history.push({pathname: '/search-studio',
+    search: 'search'+'='+e.target.search.value+'&location='+e.target.location.value,
+    state: { search: e.target.search.value, location: e.target.location.value  }})
+  }
+
   render() {
+    if(!this.props.locate){
+      return ''
+    }
+    
 const classProp = 'img-fluid rounded-circle image-gallery'
 const img1 = <img src={`${BG1}`} className={`${classProp}`} style={{borderRadius: '50%'}} alt='img1'/>
 const img2 = <img src={`${BG2}`} className={`${classProp}`} style={{borderRadius: '50%'}} alt='img2' />
 const img3 = <img src={`${BG3}`} className={`${classProp}`} style={{borderRadius: '50%'}} alt='img3'/>
     return (
       <div>
-        <Hero />
+        <Hero handleSubmit={this.handleSubmit} 
+        locate={this.props.locate}
+        />
 
 
 <Title header="Featured Offers Near You" subtitle='Explore Top Rated Venues wherever you are!'/>
@@ -64,5 +85,9 @@ infoText="Don't just think it, write it or freestyle it... Record It! Search thr
 }
 
 
-  export default Home;
+function mapStateToProps({locate}) {
+  return { locate };
+}
+
+export default connect(mapStateToProps, {  fetchLocation })(Home);
 
