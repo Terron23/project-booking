@@ -31,6 +31,30 @@ this.state ={
   }
 
 
+  handleSubmit = (event, formType) => {
+    event.preventDefault();
+    let name = ""
+    let address1 =""
+    let address2 =  ""
+    let postalCode = ""
+    let city = ""
+    let region =""
+    let email= ""
+    let phone = ""
+    let venue = event.target.venue.value
+    let studioName =  event.target.studioName.value
+    let price =  event.target.price.value
+    let rules = ""
+    let guest = ""
+    let studioType =  event.target.studioType.value
+    let hoursOfOperation = ""
+    let files = ""
+    let studioImage;
+
+
+    
+    }
+
 
 
   render() {

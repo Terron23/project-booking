@@ -24,7 +24,6 @@ this.state = {
   guest: "",
   location:"",
   state: "",
-  search: this.props.location.state.search,
 }
 
   }
@@ -64,14 +63,11 @@ handleAvailibility = (e) =>{
 console.log(this.state.location)
 }
 
-handleChange =(e)=>{
-  this.setState({search: e.target.search.value})
-}
+
 
   render() {
  
    console.log(this.props)
-   console.log(this.state)
     return (<div className="container-fluid">
       {/* <MapContainer /> */}
   
@@ -90,8 +86,6 @@ handleChange =(e)=>{
       time = {this.state.time}
       classProp={`btn btn-secondary btn-lg`}
       buttonTitle="Search"
-      locate={this.props.location.state.location}
-      search={this.props.location.state.search}
       />
 <div className="container">
 <hr />
@@ -99,11 +93,7 @@ handleChange =(e)=>{
 <hr />  
 </div>
 
-<FeaturedStudio 
-totalStudios={1000000} 
-locate={this.props.location.state.location}
-search={this.state.search}
-/>
+<FeaturedStudio totalStudios={1000000} />
        
      
         </div>

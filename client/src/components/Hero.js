@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+
 import Schedule from './Schedule'
 
 
 export default class Hero extends Component {
-
   render() {
-    console.log(this.props)
     return (
       <header class="masthead text-center text-white">
       <div class="masthead-content">
@@ -13,10 +12,7 @@ export default class Hero extends Component {
           <h1 class="masthead-heading mb-0">Book & Go</h1>
           <h2 class="masthead-subheading mb-0">Find, Book, Go</h2>
 
-       <Schedule 
-        handleAvailibility={this.props.handleSubmit} 
-       locate ={this.props.locate}
-       />
+       <Schedule  />
        
           
         </div>

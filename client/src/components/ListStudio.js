@@ -77,13 +77,11 @@ axios.post(`https://api.cloudinary.com/v1_1/etlt/image/upload`, formData)
     axios.post('/api/post-listing', 
         {studioName, price, rules, name, 
         email,address1, address2, postalCode, city, region, phone, 
-        venue,  studioImage, guest, studioType, hoursOfOperation }).
-        then(res=>{
-            this.props.history.push(`/availibility/${studioName}/${res.data}`)
+        venue,  studioImage, guest, studioType, hoursOfOperation })
+        .then(res=>{
+            this.setState({alert: "alert alert-success"});
         })
-        console.log(cloudResponse.data)
-    
-}).catch(err=>console.log(err))
+})
 
 
 }
@@ -166,12 +164,12 @@ handleRegion =()=>{
 
    <div className="form-group row">
    
-<button className="btn btn-secondary" type="submit">Save & Continue</button>
+<button className="btn btn-secondary" type="submit">Submit</button>
 </div>
 </fieldset>
         </form>
         <div className="form-group row">
-{/* <Link to={`/availibility/${studioName}`} className={`btn btn-primary ${alert}`} >Add Availibility</Link> */}
+<Link to={`/availibility/${studioName}`} className={`btn btn-primary ${alert}`} >Add Availibility</Link>
 </div>
       </div>
       </div>

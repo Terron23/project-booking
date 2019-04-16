@@ -42,7 +42,7 @@ componentDidMount(){
          <Route path="/find-studio/:id" component={SingleStudio} />
          <Route path="/userprofile" component={Profile} />
          <Route path="/payment/:studioid" component={Payment} />
-         <Route path="/availibility/:studioName/:studioid" component={Availibility} />
+         <Route path="/availibility/:studioName/:id" component={Availibility} />
          <Route path="/post-studio/:studioname/:id" component={ListStudio} />
          <Route path="/confirmation" component={Confirmation} />
          <Footer />
