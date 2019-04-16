@@ -40,19 +40,25 @@ module.exports = (app) => {
     app.post('/api/post-listing-time', async (req, res) => {
 
 
-        const {starttime, endtime, day, studioname} = req.body
+        const {starttime, endtime, day, studioname, studioid, schedule} = req.body
         let studioName = studioname;
         //delete req.body.studioname;
-        console.log(req.body)
-        console.log(studioname)
+        console.log(schedule)
+        console.log(studioName)
+        console.log(studioid)
+        try{
        const studioUpdate = await Studio.update(
-            { studioName:studioName},
-            {$push: { availibility: req.body}
-            })
-        
+            { studioName:studioName, _id:studioid},
+            { availibility: schedule}
+            )
             console.log(studioUpdate)
-         
+            res.send("Update")
+        }
+        catch(err){
+            throw err;
+        }
         });
+    
         
     
         app.post('/api/post-listing', async (req, res) => {
@@ -116,7 +122,10 @@ module.exports = (app) => {
                 hoursOfOperation,
                 studioType,
                 studioImage,
-                }).save();
+                }).save((err, inserted)=>{
+                    console.log(inserted._id)
+                    res.send(inserted._id)
+                });
             }
              
             });

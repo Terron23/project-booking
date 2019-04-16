@@ -22,9 +22,9 @@ this.state = {
   day: "",
   availibility:[],
   guest: "",
-  location:"",
   state: "",
-  search: this.props.location.state.search,
+  search: "",
+  location: "",
 }
 
   }
@@ -101,8 +101,8 @@ handleChange =(e)=>{
 
 <FeaturedStudio 
 totalStudios={1000000} 
-locate={this.props.location.state.location}
-search={this.state.search}
+locate={this.props.location.state.location ? this.props.location.state.location: null}
+search={this.props.location.state.search}
 />
        
      

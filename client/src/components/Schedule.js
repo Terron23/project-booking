@@ -23,7 +23,7 @@ this.state={
     if(!this.props.locate){
       return ''
     }
-    let {studioTypeFilter, time, handleTime, handleAvailibility, block, locate, classProp, buttonTitle} = this.props
+    let {studioTypeFilter, time, handleTime, handleAvailibility, block, locate, classProp, buttonTitle, search} = this.props
    
   return(
   
@@ -31,7 +31,11 @@ this.state={
         <form onSubmit={handleAvailibility}>
   <div className="row">
   <div className="col-md-8 form-group">
-      <input  name='search' style={styles.inputStyle} type="text" className="form-control input-lg" placeholder="Search" />
+      <input  name='search' 
+      style={styles.inputStyle} 
+      defaultValue={search}
+      type="text" 
+      className="form-control input-lg" placeholder="Search" />
 </div>
 
 <div className="col-md-4 form-group">

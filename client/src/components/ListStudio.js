@@ -171,9 +171,7 @@ handleRegion =()=>{
 </div>
 </fieldset>
         </form>
-        <div className="form-group row">
-{/* <Link to={`/availibility/${studioName}`} className={`btn btn-primary ${alert}`} >Add Availibility</Link> */}
-</div>
+
       </div>
       </div>
     );

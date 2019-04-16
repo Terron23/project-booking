@@ -14,39 +14,11 @@ super(props);
 this.state ={
     alert: "d-none",
     dates: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    timeSlot: [<form key={0} className="form-inline col-md-12" onSubmit={this.handleSubmit}>         
-    <div className="form-group mb-2">
-    <DropDown options={this.handDays}
- 
-    name="days" 
-    type="text" 
-    label="Days of the Week"  />
-         
-     </div>
- 
-     <div className="form-group mb-2 mx-sm-3">
-      
-     <Input name="timeFrom" type="text" label="Start Time (EX: 9:30 AM)"  placeholder="Enter Start Time" />
- 
-         </div>
-   
-         <div className="form-group mb-2 mx-sm-3">
-     
-         <Input name="endTime" 
-         type="text" label="End Time (EX: 9:30 PM)" 
-          placeholder="Enter Time Finished" 
-         
-          />
-         </div>
-     
- 
-         <div className="form-group mb-2 mx-sm-3">
-    <button className="btn btn-secondary mb-2" type="submit">Submit</button>
-    </div>
-                
-            </form>],
     error1: "",
-    error2: ""
+    error2: "",
+    dateArr:[],
+    timeSlot: [],
+    reveal: false,
     
 }
 }
@@ -66,7 +38,7 @@ handleDates =(e)=>{
 e.preventDefault()
    let timeSlot = [...this.state.timeSlot] 
 
-   timeSlot.push([<form key={timeSlot.length+1} className="form-inline col-md-12" onSubmit={this.handleSubmit}>         
+   timeSlot.push([<form key={timeSlot.length+1} className="form-inline col-md-12" onSubmit={this.handleTime}>         
  
    <div className="form-group mb-2">
    <DropDown options={this.handDays}
@@ -104,38 +76,51 @@ e.preventDefault()
 
 }
 
+handleTime =(event)=>{
+event.preventDefault();
+let day = event.target.days.value
+let endtime= event.target.endTime.value
+let starttime = event.target.timeFrom.value
+
+let dateArr = this.state.dateArr;
+
+dateArr.push({starttime, endtime, day })
+this.setState({dateArr, reveal:true})
+
+}
 
 
+handleSchedule =()=>{
+    return this.state.dateArr.map(s =>{
+        return(
+                <div>
+                    {`${s.day}: ${s.starttime} - ${s.endtime}`}
+                    </div>
 
-handleSubmit = async (event) => {
+        )
+    })
+}
+
+handleSubmit =  (event) => {
     event.preventDefault();
     
-    //console.log(files[0])
-    
-    let day = event.target.days.value
-    let endtime= event.target.endTime.value
-    let starttime = event.target.timeFrom.value
-    let studioname = ''
-    
-    console.log(starttime, endtime, day, studioname)
+    let studioname = this.props.match.params.studioName
+    let studioid = this.props.match.params.id
+    let schedule = this.state.dateArr
+    console.log(schedule)
 
-  
-    try{
-  
-      
-        const response = await axios.post('/api/post-listing-time', {starttime, endtime, day , studioname})
-        console.log(response)
-    
+   axios.post('/api/post-listing-time', {schedule, studioname, studioid})
+   .then(res => {
+       console.log(res.data)
+       this.props.history.push('/confirmation')
+   })
+       
 
     
-  
     }
-    catch(err){
-    
-    throw err;
-    }
-    
-    }
+
+
+
 
   render() {
       if (!this.props.auth) {
@@ -143,14 +128,18 @@ handleSubmit = async (event) => {
       }
   
     return (
-    <div className="container-fluid site-section">
+    <div className="container">
   
    <Title header="Hours of Availibility" margin={0} />
 
- {this.state.timeSlot}
- 
+    {this.state.timeSlot}
+        {this.handleSchedule()}
 
      <a href="" onClick={this.handleDates}>Add Hours of Operation</a>
+     {this.state.reveal ?
+     <button className="btn btn-primary" onClick={this.handleSubmit}>Submit Schedule</button>
+     : ""
+     }
       </div>
      
     );
