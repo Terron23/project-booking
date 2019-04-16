@@ -16,28 +16,27 @@ class FeaturedStudios extends Component {
   
   featureType =()=>{
 if(this.props.type === 'top-rated'){
-  return this.props.studio.sort((a, b)=>a.rating.length + b.rating.length).filter((studio, i)=> i <= this.props.totalStudios)
+  return this.props.studio.sort((a, b)=>a.rating.length + b.rating.length)
+  .filter((studio, i)=> i <= this.props.totalStudios)
   .map((studio)=>{
                 return (
                   
                 <div className="col-lg-3 col-md-3 image-gallery" key={studio._id}>
-              
-               
                     <Image 
                     src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
                  
                   <CardInfo studioName={studio.studioName} 
                   price={studio.price} 
                   _id={studio._id} 
-                  studioType={studio.studioType}/>
-                 
-                 
-                
+                  studioType={studio.studioType}/>   
               </div>)})
 }
 
 
-return this.props.studio.sort((a, b)=>a.rating.length + b.rating.length).filter((studio, i)=> i <= this.props.totalStudios)
+return this.props.studio
+.sort((a, b)=>a.rating.length + b.rating.length)
+.filter((studio, i)=> i <= this.props.totalStudios)
+.filter(studio => this.props.search === studio.studioType)
 .map((studio)=>{
               return (
                 
@@ -59,7 +58,7 @@ return this.props.studio.sort((a, b)=>a.rating.length + b.rating.length).filter(
   }
 
 render(){
-     
+    
     return(
 
 
