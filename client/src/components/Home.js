@@ -38,38 +38,14 @@ class Home extends Component {
                       studioType={studio.studioType}/>   
                   </div>)})
     }
-    
-    
-    // return this.props.studio
-    // .sort((a, b)=>a.rating.length + b.rating.length)
-    // .filter((studio, i)=> i <= this.props.totalStudios)
-    // .filter(studio => this.props.search === studio.studioType)
-    // .map((studio)=>{
-    //               return (
-                    
-                      
-    //                 <div className="col-lg-3 col-md-3" key={studio._id}>
-                  
-                   
-    //                     <Image 
-    //                     src={`${studio.studioImage}`} alt={`${studio.studioName}`} />
-                     
-    //                   <CardInfo studioName={studio.studioName} 
-    //                   price={studio.price} 
-    //                   _id={studio._id} 
-    //                   studioType={studio.studioType}/>
-                     
-                     
-                    
-    //               </div>)})
-    //   }
+
 
 
   handleSubmit =(e)=>{
     e.preventDefault();
-    this.props.history.push({pathname: '/search-studio',
-    search: 'search'+'='+e.target.search.value+'&location='+e.target.location.value,
-    state: { search: e.target.search.value, location: e.target.location.value  }})
+    let search = e.target.search.value==="" ? 'All' :e.target.search.value
+    let location = e.target.location.value===""? 'All':e.target.location.value
+    this.props.history.push('/search-studio/'+search+'/'+location)
   }
 
   render() {

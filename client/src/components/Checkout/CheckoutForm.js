@@ -3,113 +3,75 @@ import axios from 'axios';
 import {CardElement, injectStripe} from 'react-stripe-elements';
 import {connect} from 'react-redux';
 import { fetchUser, fetchStudio } from '../../actions';
-
+import Title from '../assets/Title'
 
 
 
 class CheckoutForm extends Component {
-    
-  
-      handleSubmit = async (e) => {
-        e.preventDefault()
-        let date = new Date();
-        let month = date.getMonth() + 1;
-        let studioName = e.target.studioname.value;
-        let payment = e.target.price.value;
-        let studioId = e.target.id.value;
-        let dateBooked = month.toString()+"/"+date.getDate().toString()+"/"+date.getFullYear().toString();
-        
-        
 
-        try {
-        let {token} = await this.props.stripe.createToken({name: e.target.name.value});
-        let response = await axios.post("/api/payment", {
-          token:token.id,
-          studioName,
-          payment,
-          studioId,
-          dateBooked,
-          studioOwner:"",
-          cardInfo: "",
-          
-        });
-       console.log(token)
-      console.log(response.ok)
-      window.location = "/confirmation";
-      console.log("Purchase Complete!")
-      if (response.ok) {
-         
-        console.log("Purchase Complete!")
-        }
-        }
-        catch (e) {
-          console.log(e.response) // undefined
-        }
-      }
-  
-  
-    render() {
+  handleSubmit = async (e) => {
+    e.preventDefault()
+    let {auth, studio} = this.props;
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let studioName = e.target.studioname.value;
+    let name = e.target.name.value;
+    let payment = e.target.price.value
+    let studioId = this.props.studioid
+    let dateBooked = month.toString()+"/"+date.getDate().toString()+"/"+date.getFullYear().toString();
+    console.log(studioId);
+    try {
       
-      if(!this.props.auth || !this.props.studio){
-        return ''
-      }
-      let {auth, studio, studioid } = this.props
+    let {token} = await this.props.stripe.createToken({name: 'test'});
+    let response = await axios.post("/api/payment", {
+      token:token.id,
+      studioName,
+      payment,
+      studioId: studioId,
+      dateBooked,
+      studioOwner: name,
+      cardInfo: "",
+
+    });
+this.props.push();
+ 
+    }
+    catch (e) {
+      console.log(e) // undefined
+      
+      console.log("Purchase Complete!")
+    }
+  }
+
+
+    render() {
+
+      let {email, studio, studioid, studioData, checkoutDetails, name} = this.props
+      console.log(studio)
       return (
         <div className="container">
-        <ul style={{"listStyle": "none"}}>
-        {studio.filter(studio=> {
-          return studio._id === studioid 
-        })
-        .map(studio => {
-          return(<span>
-            <li>Studio Name: {studio.studioName}</li>
-            <li>Studio Price: {studio.price}</li>
-            <li>Guest Allowed: {studio.guest}</li>
-            <li>Venue Type: {studio.venue}</li>
-            </span>
-          )
+         <div className="row">
+         <Title header="Book Your Session" subtitle="This is only a test" /> 
+          <div className="checkout col-md-6">
+      
 
-        })}
-       </ul>
-       
          <form onSubmit={this.handleSubmit}>
-         
-         {studio.filter(studio=> {
-          return studio._id === studioid 
-        })
-        .map(studio => {
-          return(<span className="d-none">
-         <div className="form-group">
-    <label for="email">Studio Name</label>
-    <input type="text" name="studioname" className="form-control" value={studio.studioName}/>
-  </div>
 
-      <div className="form-group">
-    <label for="email">Studio Owner</label>
-    <input type="text" name="studioname" className="form-control" value={studio.name}/>
-  </div>
+      {studio.filter(studioProp=> studioProp._id === studioid)
+      .map(studioProp=>{
+      return(<div className="d-none"><input defaultValue={studioProp.studioName} name="studioname" />
+           <input defaultValue={studioProp.name} name="name" />
+           <input defaultValue={studioProp.price} name="price" /></div>)
+      })}
 
-   <div className="form-group">
-    <label for="email">Price</label>
-    <input type="text" name="price" className="form-control"  defaultValue={studio.price}/>
-  </div>
-
-    <div className="form-group">
-    <label for="email">ID</label>
-    <input type="text" name="id" className="form-control" defaultValue={studio._id}/>
-  </div> </span>)
-        })}
- 
-
-  
   <div className="form-group">
     <label for="email">Email</label>
-    <input type="email" className="form-control" name="email" defaultValue={auth.email}/>
+    <input type="email" className="form-control" name="email" defaultValue={email}/>
   </div>
 
     <div className="form-group">
     <label for="email">Name</label>
-    <input type="text" name="name" class="form-control" defaultValue={auth.name} />
+    <input type="text" name="name" class="form-control" defaultValue={name} />
   </div>
 
   <div className="form-group">
@@ -119,15 +81,20 @@ class CheckoutForm extends Component {
           <button className="btn btn-primary" type="submit">Purchase</button>
 
           </form>
-    
+
+          
+          </div>
+
+<div className="col-md-6">
+{checkoutDetails()}
+</div>
+
+          </div>
         </div>
       );
     }
   }
 
-  function mapStateToProps({auth, studio}){
-    //State from reducers/index.js file  gets passed to header component as props
-    return {auth, studio}
-  }
-  
-  export default connect(mapStateToProps,  { fetchUser , fetchStudio, })(injectStripe(CheckoutForm));
+
+
+  export default injectStripe(CheckoutForm);

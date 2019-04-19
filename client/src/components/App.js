@@ -38,10 +38,11 @@ componentDidMount(){
          <Route exact  path="/" component={Home}/> 
          <Route path="/sign-up" component={SignUp} />
          <Route path="/post-studio" component={ListStudio} />
-         <Route path="/search-studio" component={StudioSearch} />
+         <Route path="/search-studio/:search/:location" component={StudioSearch} />
          <Route path="/find-studio/:id" component={SingleStudio} />
          <Route path="/userprofile" component={Profile} />
          <Route path="/payment/:studioid" component={Payment} />
+         <Route path="/payment" component={Payment} />
          <Route path="/availibility/:studioName/:id" component={Availibility} />
          <Route path="/post-studio/:studioname/:id" component={ListStudio} />
          <Route path="/confirmation" component={Confirmation} />

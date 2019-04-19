@@ -16,9 +16,7 @@ const Users = mongoose.model('users');
 
 module.exports = (app) => {
 
- app.get('https://json.geoiplookup.io/api?callback=?', function(data) {
-  console.log(JSON.stringify(data, null, 2));
-})
+
 
 app.get('/auth/google', passport.authenticate('google', {
     
@@ -88,9 +86,9 @@ app.post("/api/payment" , async (req, res) => {
       cardInfo,} = req.body;
     try {
         let {status} = await stripe.charges.create({
-          amount: 2000,
+          amount: payment*100,
           currency: "usd",
-          description: "An example charge",
+          description: "",
           source: req.body.token
         });
 
@@ -107,7 +105,9 @@ app.post("/api/payment" , async (req, res) => {
     
         res.json({status});
       } catch (err) {
-        res.status(500).end();
+        // res.status(500).end();
+        console.log(err);
+        console.log("Error")
       }
 })
 

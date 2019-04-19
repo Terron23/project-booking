@@ -9,6 +9,10 @@ userSchema = new Schema({
     email: String,
     name: String,
     social: Array,
+    address: String,
+    state: String,
+    zip: String,
+    city: String,
     
 });
 //Mongo two arguments mean load something in

@@ -1,31 +1,36 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { fetchStudio} from '../../actions';
+import { fetchStudio } from '../../actions';
 import { Link } from 'react-router-dom';
+import Title from '../assets/Title'
 
 
 
 
 
 
-const Studios = ({studioName, price, guest, rules, id, image}) => {
+const Studios = ({studioName, price, guest, rules, id, image, availibility}) => {
   return ( 
-    <div class="col-md-12">
-            
-    <div class="block-3 d-md-flex">
-    <div class="image" style={{"backgroundImage":`url(${image})` }}></div>
-      <div class="text">
+    <div className="row" >
+        <Title header={studioName}/>  
+    <div className="col-md-7">
+    <img className="image img" src={`${image}`} width="100%" height="400px"/>
+</div>
+      <div className="col-md-4">
+  
+        <div className="price" style={{margin: 50}}><h2>
+          <sup>$</sup><span className="number3">{price}</span>
+          <sub>/per hour</sub>
+          </h2>
+        <h5>Availible Studio Times</h5>
+        {availibility.map(a =>{
+          return (a.day +': '+a.starttime +' '+a.endtime)
+        })}
 
-        <h2 class="heading">{studioName}</h2>
-        <div class="price"><sup>$</sup><span class="number3">{price}</span><sub>/per hour</sub></div>
-        <ul class="specs mb-5">
-            <li><strong>Guest Allowed</strong> {guest}</li>
-            <li><strong>Rules:</strong> {rules}</li>
-        </ul>
 
         <p><Link to={`/payment/${id}`} className="btn btn-primary py-3 px-5">Book</Link></p>
 
-      </div>
+</div>
     </div>
 
 
@@ -54,6 +59,7 @@ componentDidMount(){
           return ''
       }
       const { studio } = this.props
+      console.log(studio)
     return (<div className="container-fluid">
      
     <div className="site-section bg-light">
@@ -69,6 +75,7 @@ componentDidMount(){
             guest={studio.guest}
             id={studio._id}
             image={studio.studioImage}
+            availibility ={studio.availibility}
              />
             
         )
@@ -84,7 +91,6 @@ componentDidMount(){
     );
   }
 }
-
 
 
 

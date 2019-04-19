@@ -26,8 +26,8 @@ this.state = {
   availibility:[],
   guest: "",
   state: "",
-  search: this.props.location.state.search,
-  location: this.props.location.state.location,
+  search: this.props.match.params.search.replace(/[^a-z0-9+]+/gi, ' '),
+  location: this.props.match.params.location.replace(/[^a-z0-9+]+/gi, ' '),
 }
 
   }
@@ -41,9 +41,28 @@ this.state = {
   featureType =()=>{
  return this.props.studio
   .sort((a, b)=>a.rating.length + b.rating.length)
-  .filter((studio, i)=> i <= 1000)
+  .filter((studio, i)=> i <= 2000)
 
-  .filter(studio => this.state.search.toLowerCase().match(studio.studioType.toLowerCase()))
+  .filter(studio => {
+   if(this.state.search === 'All' || this.state.search === ''){
+     console.log("all for search", studio.studioType.length > 0)
+   return studio.studioType.length > 0;
+   }
+   else{
+   
+    return studio.studioType.toLowerCase().match(this.state.search.toLowerCase())
+   }
+  })
+  .filter(studio =>{
+    if(this.state.location === 'All' || this.state.location === '' ){
+      console.log("All fro location", studio.city.length > 0)
+      return studio.city.length > 0
+    }
+
+  console.log("match should work", studio.city.toLowerCase().match(this.state.location.toLowerCase()), this.state.location.toLowerCase(), studio.city)
+  return studio.city.toLowerCase().match(this.state.location.toLowerCase())
+
+  })
   .map((studio)=>{
                 return (
                   
@@ -57,7 +76,9 @@ this.state = {
                     <CardInfo studioName={studio.studioName} 
                     price={studio.price} 
                     _id={studio._id} 
-                    studioType={studio.studioType}/>
+                    studioType={studio.studioType}
+                    city={studio.city}
+                    />
                    
                    
                   
@@ -104,7 +125,7 @@ handleChange =(e)=>{
 }
 
   render() {
-    if(!this.props.studio){
+    if(!this.props.studio || !this.props.locate){
       return 'Loading...'
     }
  
