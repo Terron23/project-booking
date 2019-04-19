@@ -28,6 +28,7 @@ this.state = {
   state: "",
   search: this.props.match.params.search.replace(/[^a-z0-9+]+/gi, ' '),
   location: this.props.match.params.location.replace(/[^a-z0-9+]+/gi, ' '),
+  reveal: true
 }
 
   }
@@ -67,7 +68,7 @@ this.state = {
                 return (
                   
                     
-                  <div className="col-lg-3 col-md-3" key={studio._id}>
+                  <div className={this.state.reveal? 'col-md-6': "col-lg-3 col-md-3 col-sm-12"} key={studio._id}>
                 
                  
                       <Image 
@@ -124,6 +125,18 @@ handleChange =(e)=>{
   this.setState({search: e.target.search.value})
 }
 
+viewMap =(e)=>{
+e.preventDefault()
+if(this.state.reveal){
+  this.setState({reveal: false})
+}
+else{
+  this.setState({reveal:true})
+}
+ 
+
+}
+
   render() {
     if(!this.props.studio || !this.props.locate){
       return 'Loading...'
@@ -153,12 +166,40 @@ handleChange =(e)=>{
 
 <div className="container">
 <hr />
-<p>Filter </p>
+<nav  className="navbar" >
+
+<ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+            Filter
+            </li>
+            </ul>
+
+<ul className="navbar-nav ml-auto">
+            <li class="nav-item">
+            <button onClick={this.viewMap}>View Map</button>
+            </li>
+           
+        </ul>
+
+</nav>
+
 <hr />  
 </div>
 
+{this.state.reveal === false ?
+<div className="col-md-12">
+  <FeaturedStudio featureType={this.featureType}/>
+  </div>
+:
+
+<div className="row">
+<div className="col-md-6">
 <FeaturedStudio featureType={this.featureType}/>
-       
+</div>
+<div className="col-md-6">
+<MapContainer /> 
+</div> 
+</div>}
      
         </div>
         </div>
