@@ -8,6 +8,7 @@ import MapContainer from '../assets/GoogleMap'
 import {connect} from 'react-redux';
 import {fetchLocation, fetchStudio} from '../../actions';
 import Image from '../assets/Image';
+import Loading from '../assets/Loading';
 import CardInfo from '../assets/CardInfo';
 import axios from 'axios';
 
@@ -175,7 +176,7 @@ else{
 
   render() {
     if(!this.props.studio || !this.props.locate){
-      return 'Loading...'
+      return <Loading />
     }
  
    console.log(this.props)

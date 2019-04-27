@@ -4,6 +4,7 @@ import CheckoutForm from './CheckoutForm';
 import {connect} from 'react-redux';
 import { fetchUser, fetchStudio } from '../../actions';
 import axios from 'axios';
+import Loading from '../assets/Loading';
 
 
 class Payment extends Component {
@@ -64,7 +65,7 @@ return (<div>
 
     render() {
       if(!this.props.auth || !this.props.studio){
-        return 'Loading...'
+        return <Loading />
       }
         return (
           <div className="container">

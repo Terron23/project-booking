@@ -53,8 +53,18 @@ this.props.push();
          <div className="row">
          <Title header="Book Your Session" subtitle="This is only a test" /> 
           <div className="checkout col-md-6">
-      
-
+      <p>Test Cards</p>
+    <table  className="table table-striped">
+<tr>
+<td>4242424242424242</td>	<td>Visa</td>
+</tr>
+<tr>
+<td>4000056655665556</td>	<td>Visa (debit)</td>
+</tr>
+<tr>
+<td>378282246310005</td>	<td>American Express</td>
+</tr>
+</table>
          <form onSubmit={this.handleSubmit}>
 
       {studio.filter(studioProp=> studioProp._id === studioid)
