@@ -9,7 +9,6 @@ import { fetchStudio} from '../actions';
 class FeaturedStudios extends Component {
 
 render(){
-
     return(
 
 

@@ -24,6 +24,7 @@ this.state ={
     region: ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'],
     venue: ['Home', 'Business', 'Online'],
     studiotype: ['Recording - Music', 'Recording - Podcast/Radio', 'Art', 'Film', 'Yoga', 'Spa', 'Photography'],
+   
 }
 }
 
@@ -144,7 +145,7 @@ handleRegion =()=>{
             <Input name="price" label='Price' type="number" placeholder="Enter your prices" />
             <DropDown options={this.handleStudioTypes} name="studioType" placeholder="Enter Studio Type"/>
              <DropDown options={this.handleVenue} name="venue" type="text" label="Venue"  placeholder="Enter Venue"/>
-                  <div className="form-group">
+                  <div className="form-group d-none">
                 <label className="control-label">Availibility</label><br />
 
                 <a data-toggle="modal" data-target="#myModal">Add Hours of Availibility</a>

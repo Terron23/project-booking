@@ -24,7 +24,7 @@ dispatch({type: FETCH_BOOKING, payload: res.data})
 
 export const fetchLocation= () => async dispatch => {
 const res = await axios.get('https://json.geoiplookup.io');
-dispatch({type: FETCH_LOCATION, payload: res.data.city})
+dispatch({type: FETCH_LOCATION, payload: res.data})
 console.log("Redux", res.data.city)
 }
 

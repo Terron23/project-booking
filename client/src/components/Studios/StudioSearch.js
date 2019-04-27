@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import {fetchLocation, fetchStudio} from '../../actions';
 import Image from '../assets/Image';
 import CardInfo from '../assets/CardInfo';
-
+import axios from 'axios';
 
 
 class StudioSearch extends Component {
@@ -28,22 +28,38 @@ this.state = {
   state: "",
   search: this.props.match.params.search.replace(/[^a-z0-9+]+/gi, ' '),
   location: this.props.match.params.location.replace(/[^a-z0-9+]+/gi, ' '),
-  reveal: true
+  reveal: true,
+  filterArr: "",
+  longLat: []
 }
 
   }
 
   componentDidMount(){
+    let longLat =[]
     this.props.fetchLocation()
     this.props.fetchStudio()
+ 
+      
   }
 
 
   featureType =()=>{
- return this.props.studio
-  .sort((a, b)=>a.rating.length + b.rating.length)
-  .filter((studio, i)=> i <= 2000)
 
+    let  filterArr=[...this.props.studio]
+let search = filterArr 
+  .sort((a, b)=>a.rating.length + b.rating.length)
+  .sort((a, b)=>{
+    if(this.state.filterArr==="low"){
+      return  a.price - b.price
+    }
+
+    if(this.state.filterArr==="high"){
+      return  b.price - a.price
+    }
+
+  })
+  .filter((studio, i)=> i <= 2000)
   .filter(studio => {
    if(this.state.search === 'All' || this.state.search === ''){
      console.log("all for search", studio.studioType.length > 0)
@@ -84,7 +100,14 @@ this.state = {
                    
                   
                 </div>)})
+
+
+   return search
+
+
     }
+
+ 
 
 handleTime =(e)=>{
 
@@ -96,6 +119,19 @@ handleTime =(e)=>{
   
   }
 
+
+handleFilters =(filter)=>{
+  if(filter === 'low') {
+  this.setState({filterArr: filter})
+  }
+  else if(filter == 'high'){
+    this.setState({filterArr: filter})
+  }
+
+  else {
+    this.setState({filterArr: filter})
+  }
+}
 
 handleAvailibility = (e) =>{
   e.preventDefault();
@@ -147,31 +183,57 @@ else{
     return (<div className="container-fluid">
       {/* <MapContainer /> */}
   
-     <Title header='Book A Session' />
+     
    
    
      
     <div className="bg-light-gray">
 
-      <div className="container-fluid">
+      <div className="container-fluid" style={{marginTop:150}}>
       
       <Schedule
       search ={this.state.search}
       locate={this.state.location}
       time = {this.state.time}
-      classProp={`btn btn-secondary btn-lg`}
-      buttonTitle="Search"
+      classProp={`btn btn-secondary btn-md`}
+      buttonTitle={"Search"}
       handleSubmit ={this.handleAvailibility}
       />
 
-<div className="container">
+<div className="container-fluid">
 <hr />
 <nav  className="navbar" >
 
+{/* <ul class="navbar-nav" style={{paddingLeft: 20, paddingRight:20}}>    
+<li class="nav-item dropdown">
+      <a class="nav-item dropdown-toggle" id="navbardrop" data-toggle="dropdown">
+ Distance
+      </a>
+
+      <div class="dropdown-menu">
+      
+        <a class="dropdown-item" onClick={()=>this.handleFilters('low')}>Venue</a>
+        <a class="dropdown-item" onClick={()=>this.handleFilters('high')}>Distance</a>
+      
+      </div>
+    </li>
+    </ul> */}
+
 <ul class="navbar-nav mr-auto">
-            <li class="nav-item ">
-            Filter
-            </li>
+
+    
+<li class="nav-item dropdown">
+      <a class="nav-item dropdown-toggle" id="navbardrop" data-toggle="dropdown">
+     Sort by
+      </a>
+      <div class="dropdown-menu">
+      
+        <a class="dropdown-item" onClick={()=>this.handleFilters('low')}>Price (Low -> High)</a>
+        <a class="dropdown-item" onClick={()=>this.handleFilters('high')}>Price (High -> Low)</a>
+      
+      </div>
+    </li>
+       
             </ul>
 
 <ul className="navbar-nav ml-auto">
@@ -188,7 +250,9 @@ else{
 
 {this.state.reveal === false ?
 <div className="col-md-12">
-  <FeaturedStudio featureType={this.featureType}/>
+  <FeaturedStudio featureType={this.featureType}
+  
+  />
   </div>
 :
 

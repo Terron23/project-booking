@@ -61,7 +61,7 @@ const img3 = <img src={`${BG3}`} className={`${classProp}`} style={{borderRadius
       <div>
         <Hero 
         handleSubmit={this.handleSubmit} 
-        locate={this.props.locate}
+        locate={this.props.locate.city}
         />
 
 
