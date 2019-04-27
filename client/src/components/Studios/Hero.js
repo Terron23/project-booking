@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import BG1 from '../../images/bg_1.jpg'
-
-
+import Typist from 'react-typist';
+import 'node_modules/react-typist/dist/Typist.css'
+import 'node_modules/react-typist/dist/Typist.js'
 
 
 class StudioHero extends Component {
@@ -14,7 +15,12 @@ render() {
           <div className="row align-items-center">
             <div className="col-md-10">
               <span className="subheading-sm">Studios</span>
-              <h2 className="heading">Indulge Your Passion</h2>
+              <Typist>
+
+              <h2 className="heading">
+             
+              Indulge Your Passion</h2>
+              </Typist>
             </div>
           </div>
         </div>

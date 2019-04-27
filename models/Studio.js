@@ -25,6 +25,7 @@ studioSchema = new Schema({
     studioType: String,
     availibility: Array,
     rating: Array,
+    category: Array,
     
     
 });

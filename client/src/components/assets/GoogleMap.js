@@ -35,19 +35,33 @@ onClose = props => {
 };
 
   render() {
+    const pos = [{lat: 37.759703, lng: -122.428093}, {lat: 38.759703, lng: -123.428093}, ]
     return (
     
         <Map 
         google={this.props.google}
         zoom={14}
         style={styles}
-        initialCenter={{ lat: 40.7413, lng: -73.9036 }}
+        visible={true}
+        initial
         >
         
-         <Marker
-          onClick={this.onMarkerClick}
-          name={'Kenyatta International Convention Centre'}
-        />
+
+
+        <Marker 
+        onClick={this.onMarkerClick}
+                name={5}
+                position={{lat: 73.9969, lng: 40.7061}}
+                 />
+
+                  <Marker 
+        onClick={this.onMarkerClick}
+                name={2}
+                position={{lat: 73.9754, lng: 40.6826}}
+                 />
+
+         
+      
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}

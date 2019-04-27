@@ -22,10 +22,7 @@ export default class Image extends Component {
 					<h5>Quick links</h5>
 					<ul className="list-unstyled quick-links">
 						<li><a href="/"><i className="fa fa-angle-double-right"></i>Home</a></li>
-						<li><a href="/"><i className="fa fa-angle-double-right"></i>About</a></li>
-						<li><a href="/"><i className="fa fa-angle-double-right"></i>FAQ</a></li>
-						<li><a href="/"><i className="fa fa-angle-double-right"></i>Get Started</a></li>
-						<li><a href="/"><i className="fa fa-angle-double-right"></i>Videos</a></li>
+					
 					</ul>
 				</div>
 				<div className="col-xs-12 col-sm-4 col-md-4">
